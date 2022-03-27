@@ -246,6 +246,19 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "new_admin",
+				"type": "address"
+			}
+		],
+		"name": "add_admin",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "re_address",
 				"type": "address"
 			}
@@ -306,6 +319,40 @@ export default [
 				"internalType": "contract IERC20",
 				"name": "_address",
 				"type": "address"
+			},
+			{
+				"internalType": "address[]",
+				"name": "user_s",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "kkd",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "k",
+				"type": "uint256"
+			}
+		],
+		"name": "dv",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "contract IERC20",
+				"name": "_address",
+				"type": "address"
 			}
 		],
 		"name": "getAllBalanceOf",
@@ -328,6 +375,19 @@ export default [
 			}
 		],
 		"name": "getAllBalanceOf_",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getPV",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -739,6 +799,38 @@ export default [
 				"internalType": "contract IERC20",
 				"name": "_address",
 				"type": "address"
+			}
+		],
+		"name": "get_re_withdraw_all",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_time_tamp",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "contract IERC20",
+				"name": "_address",
+				"type": "address"
 			},
 			{
 				"internalType": "address",
@@ -813,6 +905,25 @@ export default [
 				"internalType": "struct QuantifyKing._User",
 				"name": "",
 				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "contract IERC20",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "get_withdraw_all",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -928,6 +1039,11 @@ export default [
 				"internalType": "contract IERC20",
 				"name": "_address",
 				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "principal",
+				"type": "uint256"
 			}
 		],
 		"name": "join",
@@ -999,6 +1115,29 @@ export default [
 			}
 		],
 		"name": "q_all_array",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "contract IERC20",
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "u",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "q_something",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -1181,6 +1320,19 @@ export default [
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "set_time_tamp",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "account",
 				"type": "address"
@@ -1296,7 +1448,12 @@ export default [
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "value",
+				"name": "_conditional_value",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_interest_value",
 				"type": "uint256"
 			},
 			{
@@ -1306,24 +1463,6 @@ export default [
 			}
 		],
 		"name": "update_conditional_value",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "value",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "k",
-				"type": "uint256"
-			}
-		],
-		"name": "update_interest_value",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
