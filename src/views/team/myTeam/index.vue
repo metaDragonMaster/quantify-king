@@ -68,7 +68,7 @@ import {
 } from "vue"
 import {
     // PlusElMessage,
-    lockLoadHandler,
+    // lockLoadHandler,
     LoadSvg,
     svgViewBox,
 } from "@/utils/PlusElement"
@@ -110,14 +110,14 @@ function selectLV(item) {
 }
 // init()
 async function init() {
-    const load = lockLoadHandler('loading');
+    // const load = lockLoadHandler('loading');
     try {
         await selectLV(teamLV[0])
         await getReInterests()
-        load.close()
+        // load.close()
     } catch (e) {
         console.error(e);
-        load.close()
+        // load.close()s
     }
 }
 onMounted(() => init())

@@ -13,14 +13,14 @@
                     <img class="icon" src="@/assets/explore/m-1-t.png" />
                     <div class="info theme-box-shadow">
                         <div class="flex">
-                            <h3>量化本金</h3>
+                            <h3>{{$t('勘察.量化本金')}}</h3>
                             <p class="refresh" @click="join">
                                 <img
                                     :class="{ 'active': joinActive }"
                                     src="@/assets/icons/icon-refresh.png"
                                     alt
                                 />
-                                <u>更新量化本金</u>
+                                <u>{{$t('勘察.更新量化本金')}}</u>
                             </p>
                         </div>
                         <div class="cell">
@@ -46,7 +46,7 @@
                     :element-loading-svg-view-box="svgViewBox"
                     element-loading-background="rgba(0, 0, 0, 0.8)"
                 >
-                    <h3>利息余额</h3>
+                    <h3>{{$t('勘察.利息余额')}}</h3>
                     <div class="cell">
                         <p>
                             <img class="icon" src="@/assets/icons/b-t.png" alt />
@@ -67,11 +67,11 @@
                     element-loading-background="rgba(0, 0, 0, 0.8)"
                 >
                     <h3>
-                        <span>利率</span>
+                        <span>{{$t('勘察.利率')}}</span>
                         <span class="color-green font-o">{{ earning.interestRate }} %</span>
                     </h3>
                     <div class="cell">
-                        <span>每 8 小时可领取</span>
+                        <span>{{$t('勘察.每8小时可领取')}}</span>
                         <!-- <span class="color-grey font-o">~ ￥0.96 （ 0.5% ）</span> -->
                         <span class="color-grey font-o">{{ earnEveryTime }}</span>
                     </div>
@@ -85,11 +85,11 @@
                     element-loading-background="rgba(0, 0, 0, 0.8)"
                 >
                     <h3>
-                        <span>积累获取利息</span>
+                        <span>{{$t('勘察.累积获取利息')}}</span>
                         <span class="color-green font-o">{{ textFromWei(userInfo.quantity) }}</span>
                     </h3>
                     <div class="cell">
-                        <span>共计产出利息{{ userInfo.withdraw_times }}次</span>
+                        <span>{{$t('勘察.共计产出利息')}}{{ userInfo.withdraw_times }}{{$t('勘察.次')}}</span>
                         <span
                             class="color-grey font-o"
                         >~ ￥{{ textFromWei(userInfo.quantity) * 6.3 }}</span>
@@ -103,7 +103,7 @@
         </section>
         <section class="model-2">
             <p class="model-title">
-                <span class="theme-text-shadow-green">利息</span>计算规则
+                <span class="theme-text-shadow-green">{{$t('勘察.利息')}}</span> {{$t('勘察.计算规则')}}
             </p>
             <div class="model-grid">
                 <div class="content">
@@ -116,8 +116,8 @@
                         element-loading-background="rgba(0, 0, 0, 0.8)"
                     >
                         <p class="cell">
-                            <span>余额达到</span>
-                            <span>利息利率</span>
+                            <span>{{$t('勘察.余额达到')}}</span>
+                            <span>{{$t('勘察.利息利率')}}</span>
                         </p>
                         <p class="cell font-o">
                             <!-- <span>≥ 30 USDT</span> -->
@@ -127,13 +127,13 @@
                             <span class="color-green">{{ userCalcData.interestRate }} %</span>
                         </p>
                         <div class="bg-green color-green font-o">
-                            <p>每 8 小时可以领取利息</p>
+                            <p>{{$t('勘察.每8小时可以领取')}}</p>
                             <p>
                                 <span class="usdt-num">{{ userCalcEveryTime }}</span>
                             USDT</p>
                         </div>
                     </div>
-                    <p class="ps">钱包余额打到下方全额，即可定时领取对应利息</p>
+                    <p class="ps">{{$t('勘察.ps1')}}</p>
                     <div
                         class="s-2 theme-box-shadow font-o"
                         v-loading="userInfo.Load"
@@ -143,47 +143,15 @@
                         element-loading-background="rgba(0, 0, 0, 0.8)"
                     >
                         <p class="cell title">
-                            <span>USDT 余额</span>
-                            <span>利息</span>
+                            <span>USDT {{$t('勘察.余额')}}</span>
+                            <span>{{$t('勘察.利息')}}</span>
                         </p>
                         <ul>
                             <li class="cell" v-for="item in InterestReveal.ICArray" :key="item.id">
                                 <span>≥ {{ item.conditional }} USDT</span>
-                                <span>{{ item.interest }} % USDT 利息</span>
+                                <span>{{ item.interest }} % USDT {{$t('勘察.利息')}}</span>
                             </li>
                         </ul>
-                        <!-- <p class="cell">
-                            <span>≥ 30 USDT</span>
-                            <span>0.5 % USDT 利息</span>
-                        </p>
-                        <p class="cell">
-                            <span>≥ 500 USDT</span>
-                            <span>0.6 % USDT 利息</span>
-                        </p>
-                        <p class="cell">
-                            <span>≥ 3000 USDT</span>
-                            <span>0.8 % USDT 利息</span>
-                        </p>
-                        <p class="cell">
-                            <span>≥ 10000 USDT</span>
-                            <span>1 % USDT 利息</span>
-                        </p>
-                        <p class="cell">
-                            <span>≥ 30000 USDT</span>
-                            <span>1.2 % USDT 利息</span>
-                        </p>
-                        <p class="cell">
-                            <span>≥ 100000 USDT</span>
-                            <span>1.5 % USDT 利息</span>
-                        </p>
-                        <p class="cell">
-                            <span>≥ 300000 USDT</span>
-                            <span>1.8 % USDT 利息</span>
-                        </p>
-                        <p class="cell">
-                            <span>≥ 1000000 USDT</span>
-                            <span>2.2 % USDT 利息</span>
-                        </p>-->
                     </div>
                 </div>
                 <div>
@@ -193,7 +161,7 @@
         </section>
         <section class="model-3">
             <p class="model-title">
-                <span class="theme-text-shadow-green">好友邀请</span>奖励
+                <span class="theme-text-shadow-green">{{$t('勘察.好友')}} {{$t('勘察.邀请')}}</span> {{$t('勘察.奖励')}}
             </p>
             <div class="model-grid">
                 <div class="content">
@@ -206,15 +174,15 @@
                         element-loading-background="rgba(0, 0, 0, 0.8)"
                     >
                         <p class="cell">
-                            <span>一级好友的分红比例</span>
+                            <span>{{$t('勘察.一级好友的分红比例')}}</span>
                             <span class="font-o">{{ ReFees.List[0] }}%</span>
                         </p>
                         <p class="cell">
-                            <span>二级好友的分红比例</span>
+                            <span>{{$t('勘察.二级好友的分红比例')}}</span>
                             <span class="font-o">{{ ReFees.List[1] }}%</span>
                         </p>
                         <p class="cell">
-                            <span>三级好友的分红比例</span>
+                            <span>{{$t('勘察.三级好友的分红比例')}}</span>
                             <span class="font-o">{{ ReFees.List[2] }}%</span>
                         </p>
                     </div>
@@ -224,14 +192,14 @@
                     </div>-->
                     <ul class="invitation">
                         <li class="theme-box-shadow">
-                            <p>邀请链接</p>
+                            <p>{{$t('勘察.邀请链接')}}</p>
                             <p>http://...</p>
-                            <button class="bg-green">复制</button>
+                            <button class="bg-green">{{$t('勘察.复制')}}</button>
                         </li>
                         <li class="theme-box-shadow">
-                            <p>邀请码</p>
+                            <p>{{$t('勘察.邀请码')}}</p>
                             <p>{{ truncationAddress(userAddress) }}</p>
-                            <button class="bg-green">复制</button>
+                            <button class="bg-green">{{$t('勘察.复制')}}</button>
                         </li>
                     </ul>
                 </div>
@@ -242,7 +210,7 @@
         </section>
         <section class="model-4">
             <p class="model-title">
-                <span class="theme-text-shadow-green">利息收益</span>奖励
+                <span class="theme-text-shadow-green">{{$t('勘察.利息收益')}}</span> {{$t('勘察.奖励')}}
             </p>
             <div class="model-grid">
                 <div
@@ -255,7 +223,7 @@
                 >
                     <p class="cell title">
                         <span class="font-o">Address</span>
-                        <span>累计收益利息</span>
+                        <span>{{$t('勘察.累积收益')}} {{$t('勘察.利息')}}</span>
                     </p>
                     <ul class="font-o address-list">
                         <li class="cell" v-for="item in KingSortData.List" :key="item.id">
@@ -334,7 +302,7 @@ async function join() {
                 message: "join success"
             })
         }
-        console.log(res)
+        // console.log(res)
         joinActive.value = false
         load.close()
     } catch (e) {
@@ -386,7 +354,7 @@ async function getUserInfo() {
         userInfo.interest_bearing_principal = _userInfo.interest_bearing_principal
         userInfo.quantity = _userInfo.quantity
         userInfo.withdraw_times = _userInfo.withdraw_times
-        console.log(_userInfo)
+        // console.log(_userInfo)
         if (!_userInfo.f) {
             join()
         }
@@ -436,15 +404,15 @@ const userCalc = debounce(async () => {
     // userCalcData.Load = true;
     userCalcData.Load = true;
     try {
-        console.log(userCalcData.modelValue)
+        // console.log(userCalcData.modelValue)
         if (userCalcData.modelValue.toString() == '0' || !userCalcData.modelValue) {
             userCalcData.second = '0';
             userCalcData.interest = '0';
             userCalcData.interestRate = '0';
         } else {
-            console.log(textToWei(userCalcData.modelValue))
+            // console.log(textToWei(userCalcData.modelValue))
             const res = await calculateEarnings(textToWei(userCalcData.modelValue));
-            console.log('userCalc', res)
+            // console.log('userCalc', res)
             userCalcData.second = res[0];
             userCalcData.interest = web3.value.utils.fromWei(res[1]);
             userCalcData.interestRate = (res[2] / 10).toString();
@@ -459,13 +427,13 @@ const userCalc = debounce(async () => {
 async function calculateEarnings(val) {
     try {
         const { QKContract } = Contracts.value
-        console.log(userInfo.interest_bearing_principal);
+        // console.log(userInfo.interest_bearing_principal);
         const res = await QKContract.methods.calculate_earnings(
             AbiAddressUSDT,
             userAddress.value,
             val
         ).call();
-        console.log("calculateEarnings", res)
+        // console.log("calculateEarnings", res)
         return res
     } catch (e) {
         console.error(e)
@@ -488,7 +456,7 @@ async function getReFee() {
     try {
         const { QKContract } = Contracts.value
         const res = await QKContract.methods.get_Re_fee().call();
-        console.log("getReFee", res)
+        // console.log("getReFee", res)
         ReFees.List = res
         // load.close()
         ReFees.Load = false;
@@ -526,7 +494,7 @@ async function startICArray() {
             InterestReveal.ICArray = list
         }
         InterestReveal.Load = false;
-        console.log(InterestReveal.ICArray)
+        // console.log(InterestReveal.ICArray)
     } catch (e) {
         console.error(e)
         // load.close()
@@ -541,7 +509,7 @@ async function getConditionalValue() {
     try {
         const { QKContract } = Contracts.value
         const res = await QKContract.methods.get_conditional_value().call();
-        console.log("conditionalValue", res)
+        // console.log("conditionalValue", res)
         return res
     } catch (e) {
         console.error(e)
@@ -551,7 +519,7 @@ async function getInterest() {
     try {
         const { QKContract } = Contracts.value
         const res = await QKContract.methods.get_interest().call();
-        console.log("conditionalValue", res)
+        // console.log("conditionalValue", res)
         return res
 
     } catch (e) {
@@ -571,7 +539,7 @@ async function withdraw() { //提现
         ).send({
             from: userAddress.value
         });
-        console.log("withdraw", res)
+        // console.log("withdraw", res)
         if (res.status) {
             init()
         }
