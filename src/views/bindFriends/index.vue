@@ -46,7 +46,7 @@ const { userAddress } = storeToRefs(storeWeb3js);
 const storeCountracts = UseStoreContracts();
 const { Contracts } = storeToRefs(storeCountracts);
 
-const userModel = ref(""); //0x44427603aE7CF2128ba257Ea478B8B34303f2beA
+const userModel = ref(""); //0x5c2571f4AaBc057a100bDfc058264EEE9C65C3D3
 const haveRe = ref(false);
 
 init();
@@ -67,11 +67,6 @@ async function isRe(address) {
     return res;
   } catch (e) {
     console.error(e);
-    // console.log(e.message,e.name,e.lineNumber)
-    PlusElMessage({
-      type: "error",
-      message: "invalid address",
-    });
     return false;
   }
 }
@@ -109,6 +104,11 @@ async function addRe() {
       }
       init();
       console.log("addRe", res);
+    } else {
+      PlusElMessage({
+        type: "error",
+        message: "invalid address",
+      });
     }
     load.close();
   } catch (e) {

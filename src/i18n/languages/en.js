@@ -65,6 +65,7 @@ export default {
         "每8小时可以领取":"Available every 8 hours",
         "每*分钟可以领取":"Available every { n } minutes",
         "计算规则":"Calculation Rules",
+        "计算器":"Calculator",
         "余额达到":"balance reached",
         "利息利率":"Interest rate",
         "ps1":"When the wallet balance reaches the full amount below, you can receive the corresponding interest regularly",
@@ -78,6 +79,7 @@ export default {
         "邀请链接":"Invitation link",
         "邀请码":"Invitation code",
         "奖励":"Reward",
+        "规则":"Rule",
         "累积收益":"Accumulated Earnings",
         "排行榜":"Leaderboard",
         "记录":"record",
@@ -99,5 +101,6 @@ export default {
         "好友总数":"Number of friends",
         "复制":"copy",
         "联系我们":"contact us",
+        "合作方":"Partners",
     },
 }

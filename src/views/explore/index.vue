@@ -184,7 +184,7 @@
         <span class="theme-text-shadow-green"
           >{{ $t("勘察.好友") }} {{ $t("勘察.邀请") }}</span
         >
-        {{ $t("勘察.奖励") }}
+        {{ $t("勘察.规则") }}
       </p>
       <div class="model-grid">
         <div class="content">
@@ -234,7 +234,7 @@
     <section class="model-4">
       <p class="model-title">
         <span class="theme-text-shadow-green">{{ $t("勘察.利息收益") }}</span>
-        {{ $t("勘察.奖励") }}
+        {{ $t("勘察.排行榜") }}
       </p>
       <div class="model-grid">
         <div
@@ -265,7 +265,7 @@
       </div>
     </section>
     <section class="model-5">
-      <p class="model-title">Trusted By</p>
+      <p class="model-title">{{ $t("勘察.合作方") }}</p>
       <img class="banner" src="@/assets/explore/m-5.png" alt />
       <div class="cell">
         <div class="color-grey">
@@ -276,7 +276,7 @@
           <changeLanguageVue></changeLanguageVue>
           <p>
             <img class="icon" src="@/assets/icons/icon-reserved.png" alt />
-            <span>Quantify king AII Rightx Reserved.</span>
+            <span>Quantify king</span>
           </p>
         </div>
         <Link to="/explore">
@@ -914,16 +914,20 @@ async function getTimeTamp() {
       button {
         margin: 10px 0;
       }
-      :deep(.icon)  {
-        width: 22px;
-        margin-right: 10px;
-      }
+    }
+    .icon {
+      width: 22px;
+      margin-right: 10px;
     }
   }
   :deep(.change-language) {
     font-size: 20px;
     @media screen and (max-width: 768px) {
       font-size: 16px;
+    }
+    .icon {
+      width: 22px;
+      margin-right: 10px;
     }
   }
 }
