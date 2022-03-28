@@ -53,7 +53,7 @@ router.beforeEach(async (to, from, next) => {
   }
 });
 router.afterEach((to) => {
-  document.title = to.meta.title;
+  document.title = `${to.meta.title} - quantify king`;
 });
 
 async function getRes(userAddress) {

@@ -63,6 +63,7 @@ export default {
         "天":"day",
         "余额":"balance",
         "每8小时可以领取":"Available every 8 hours",
+        "每*分钟可以领取":"Available every { n } minutes",
         "计算规则":"Calculation Rules",
         "余额达到":"balance reached",
         "利息利率":"Interest rate",
@@ -97,5 +98,6 @@ export default {
         "可领取":"Available",
         "好友总数":"Number of friends",
         "复制":"copy",
+        "联系我们":"contact us",
     },
 }

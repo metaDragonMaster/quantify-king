@@ -26,7 +26,7 @@ const routes = [
         path: "/explore",
         name: "explore",
         meta: {
-          title: "探究",
+          title: "explore",
         },
         component: () => import("@/views/explore/index.vue"),
       },

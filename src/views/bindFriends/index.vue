@@ -1,214 +1,220 @@
 <template>
-    <div class="bind-friends font-o limit-max-width-media">
-        <p class="model-title">
-            <span class="theme-text-shadow-green">BIND</span> Friends
-        </p>
-        <div class="from theme-box-shadow">
-            <p class="ps">Once the invitation code is bound, it cannot be changed.</p>
-            <p class="ps">Please fill in it carefully</p>
-            <input
-                v-if="!haveRe"
-                class="bind-input"
-                placeholder="Please enter the invitation code"
-                type="text"
-                v-model="userModel"
-            />
-            <p v-else class="bind-input">{{ userModel }}</p>
-            <!-- <Link ></Link> -->
-            <button v-if="!haveRe" class="theme-button-clip font-o" @click="beforeAddre">Determino</button>
-        </div>
+  <div class="bind-friends font-o limit-max-width-media">
+    <p class="model-title">
+      <span class="theme-text-shadow-green">BIND</span> Friends
+    </p>
+    <div class="from theme-box-shadow">
+      <p class="ps">Once the invitation code is bound, it cannot be changed.</p>
+      <p class="ps">Please fill in it carefully</p>
+      <input
+        v-if="!haveRe"
+        class="bind-input"
+        placeholder="Please enter the invitation code"
+        type="text"
+        v-model="userModel"
+      />
+      <p v-else class="bind-input">{{ userModel }}</p>
+      <!-- <Link ></Link> -->
+      <button
+        v-if="!haveRe"
+        class="theme-button-clip font-o"
+        @click="beforeAddre"
+      >
+        Determino
+      </button>
+      <Link v-else to="/explore"
+        ><button class="theme-button-clip font-o">
+          to explore
+        </button></Link
+      >
     </div>
+  </div>
 </template>
 
 <script setup>
 // getRes
-import {
-    ref
-} from "vue"
+import { ref } from "vue";
 import Decimal from "decimal.js";
-import { PlusElMessage, lockLoadHandler } from "@/utils/PlusElement"
-import { storeToRefs } from "pinia"
-import { UseStoreWeb3js, UseStoreContracts } from "@/stores/web3js"
-import baseAddress from "@/abis/contracts"
-const {
-    AbiAddressQK,
-    addedValue,
-} = baseAddress;
-const storeWeb3js = UseStoreWeb3js()
-const {
-    userAddress,
-    setRe
-} = storeToRefs(storeWeb3js)
-const storeCountracts = UseStoreContracts()
+import { PlusElMessage, lockLoadHandler } from "@/utils/PlusElement";
+import { storeToRefs } from "pinia";
+import { UseStoreWeb3js, UseStoreContracts } from "@/stores/web3js";
+import baseAddress from "@/abis/contracts";
+const { AbiAddressQK, addedValue } = baseAddress;
+const storeWeb3js = UseStoreWeb3js();
+const { setRe } = storeWeb3js;
+const { userAddress } = storeToRefs(storeWeb3js);
+const storeCountracts = UseStoreContracts();
 const { Contracts } = storeToRefs(storeCountracts);
 
-const userModel = ref('')//0x303d464f8cE31974398D6734C7B561bd9526190f
-const haveRe = ref(false)
+const userModel = ref(""); //0x44427603aE7CF2128ba257Ea478B8B34303f2beA
+const haveRe = ref(false);
 
-init()
+init();
 async function init() {
-    const load = lockLoadHandler('loading...')
-    haveRe.value = await isRe(userAddress.value)
-    load.close()
-    if (haveRe.value) {
-        userModel.value = await getRes()
-    }
+  const load = lockLoadHandler("loading...");
+  haveRe.value = await isRe(userAddress.value);
+  load.close();
+  if (haveRe.value) {
+    userModel.value = await getRes();
+  }
 }
 
 async function isRe(address) {
-    try {
-        const { QKContract } = Contracts.value
-        const res = await QKContract.methods.isRe(address).call();
-        console.log(res)
-        return res
-    } catch (e) {
-        console.error(e)
-        // console.log(e.message,e.name,e.lineNumber)
-        PlusElMessage({
-            type: 'error',
-            message: 'invalid address'
-        })
-        return false;
-    }
+  try {
+    const { QKContract } = Contracts.value;
+    const res = await QKContract.methods.isRe(address).call();
+    console.log(res);
+    return res;
+  } catch (e) {
+    console.error(e);
+    // console.log(e.message,e.name,e.lineNumber)
+    PlusElMessage({
+      type: "error",
+      message: "invalid address",
+    });
+    return false;
+  }
 }
 
 async function getRes() {
-    const load = lockLoadHandler('get address, wait loading...')
-    try {
-        const { QKContract } = Contracts.value
-        const res = await QKContract.methods.getRes(userAddress.value).call();
-        console.log(res)
-        load.close()
-        return res
-    } catch (e) {
-        console.error(e)
-        PlusElMessage({
-            type: 'error',
-            message: 'invalid find address'
-        })
-        load.close()
-        return '';
-    }
+  const load = lockLoadHandler("get address, wait loading...");
+  try {
+    const { QKContract } = Contracts.value;
+    const res = await QKContract.methods.getRes(userAddress.value).call();
+    console.log(res);
+    load.close();
+    return res;
+  } catch (e) {
+    console.error(e);
+    PlusElMessage({
+      type: "error",
+      message: "invalid find address",
+    });
+    load.close();
+    return "";
+  }
 }
 
-
-
 async function addRe() {
-    const load = lockLoadHandler('add address, wait loading...')
-    try {
-        const { QKContract } = Contracts.value
-        const _isRe = await isRe(userModel.value);
-        if (_isRe) {
-            const res = await QKContract.methods.add_re(userModel.value).send({
-                from: userAddress.value
-            });
-            if (res) {
-                setRe(userModel.value)
-            }
-            load.close()
-            init()
-            console.log('addRe', res)
-        }
-    } catch (e) {
-        console.error(e)
-        PlusElMessage({
-            type: 'error',
-            message: 'add failed'
-        })
-        load.close()
+  const load = lockLoadHandler("add address, wait loading...");
+  try {
+    const { QKContract } = Contracts.value;
+    const _isRe = await isRe(userModel.value);
+    if (_isRe) {
+      const res = await QKContract.methods.add_re(userModel.value).send({
+        from: userAddress.value,
+      });
+      if (res) {
+        setRe(userModel.value);
+      }
+      init();
+      console.log("addRe", res);
     }
+    load.close();
+  } catch (e) {
+    console.error(e);
+    PlusElMessage({
+      type: "error",
+      message: "add failed",
+    });
+    load.close();
+  }
 }
 
 async function beforeAddre() {
-    const v_res = await allowance()
-    const v = new Decimal(v_res)
-    console.log('是否授权过', v);
-    if (v <= 0) {
-        const iAll = await increaseAllowance()
-        console.log('是否授权了', iAll);
-        if(iAll) {
-            addRe()
-        }
-    } else {
-        addRe()//0x5c2571f4AaBc057a100bDfc058264EEE9C65C3D3
+  const v_res = await allowance();
+  const v = new Decimal(v_res);
+  console.log("是否授权过", v);
+  if (v <= 0) {
+    const iAll = await increaseAllowance();
+    console.log("是否授权了", iAll);
+    if (iAll) {
+      addRe();
     }
+  } else {
+    addRe(); //0x5c2571f4AaBc057a100bDfc058264EEE9C65C3D3
+  }
 }
 
 async function allowance() {
-    try {
-        const { USDTContract } = Contracts.value;
-        const res_allowance = await USDTContract.methods.allowance(userAddress.value, AbiAddressQK).call();
-        return res_allowance
-    } catch (e) {
-        // setUserAddress('')
-        console.error(e);
-    }
+  try {
+    const { USDTContract } = Contracts.value;
+    const res_allowance = await USDTContract.methods
+      .allowance(userAddress.value, AbiAddressQK)
+      .call();
+    return res_allowance;
+  } catch (e) {
+    // setUserAddress('')
+    console.error(e);
+  }
 }
 
 async function increaseAllowance() {
-    const load = lockLoadHandler('Sign in loading...')
-    try {
-        const { USDTContract } = Contracts.value;
-        const res = await USDTContract.methods.increaseAllowance(AbiAddressQK, addedValue).send({
-            from: userAddress.value
-        });
-        console.log(res)
-        load.close()
-        return res;
-    } catch (e) {
-        console.error(e);
-        PlusElMessage({
-            type: 'error',
-            message: e.message
-        })
-        load.close()
-        return false
-    }
+  const load = lockLoadHandler("Sign in loading...");
+  try {
+    const { USDTContract } = Contracts.value;
+    const res = await USDTContract.methods
+      .increaseAllowance(AbiAddressQK, addedValue)
+      .send({
+        from: userAddress.value,
+      });
+    console.log(res);
+    load.close();
+    return res;
+  } catch (e) {
+    console.error(e);
+    PlusElMessage({
+      type: "error",
+      message: e.message,
+    });
+    load.close();
+    return false;
+  }
 }
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .model-title {
-    text-align: center;
-    font-size: 48px;
-    margin-top: 48px;
-    margin-bottom: 48px;
+  text-align: center;
+  font-size: 48px;
+  margin-top: 48px;
+  margin-bottom: 48px;
 }
 .theme-button-clip {
-    padding: 15px 40px;
+  padding: 15px 40px;
 }
 .theme-box-shadow {
-    border-radius: 14px;
+  border-radius: 14px;
 }
 .from {
-    max-width: 1218px;
-    margin: 0 auto;
+  max-width: 1218px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 180px 0 120px;
+  @media screen and (max-width: 768px) {
+    padding: 40px 0 40px;
+  }
+  .bind-input {
+    background-color: transparent;
+    background-image: url("~@/assets/bg/bg-bind-friends-input.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
+    padding: 15px 40px;
+    // font-size: 20px;
+    color: #fff;
+    height: 50px;
     text-align: center;
-    padding: 180px 0 120px;
+    display: block;
+    width: 90%;
+    max-width: 650px;
+    margin: 65px auto 150px;
     @media screen and (max-width: 768px) {
-        padding: 40px 0 40px;
+      margin: 25px auto 40px;
     }
-    .bind-input {
-        background-color: transparent;
-        background-image: url("~@/assets/bg/bg-bind-friends-input.png");
-        background-position: center;
-        background-size: contain;
-        background-repeat: no-repeat;
-        border: none;
-        padding: 15px 40px;
-        // font-size: 20px;
-        color: #fff;
-        height: 50px;
-        text-align: center;
-        display: block;
-        width: 90%;
-        max-width: 650px;
-        margin: 65px auto 150px;
-        @media screen and (max-width: 768px) {
-            margin: 25px auto 40px;
-        }
-        &::placeholder {
-            color: #ffffff;
-        }
+    &::placeholder {
+      color: #ffffff;
     }
+  }
 }
 </style>
