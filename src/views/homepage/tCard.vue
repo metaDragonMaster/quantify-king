@@ -2,8 +2,8 @@
     <div class="t-card theme-box-shadow">
         <div class="coin-type">
             <img src="@/assets/icons/b-t.png" alt />
-            <span class="theme-bg-shadow">ERC 20</span>
-            <span class="theme-bg-shadow-green">TRC 20</span>
+            <span class="theme-bg-shadow">BSC</span>
+            <!-- <span class="theme-bg-shadow-green">TRC 20</span> -->
         </div>
         <div class="font-o">
             <p>Partner wallet balance ></p>

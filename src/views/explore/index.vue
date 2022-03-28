@@ -15,7 +15,11 @@
             <div class="flex">
               <h3>{{ $t("勘察.量化本金") }}</h3>
               <p class="refresh" @click="join">
-                <img :class="{ active: joinActive }" src="@/assets/icons/icon-refresh.png" alt />
+                <img
+                  :class="{ active: joinActive }"
+                  src="@/assets/icons/icon-refresh.png"
+                  alt
+                />
                 <u>{{ $t("勘察.更新量化本金") }}</u>
               </p>
             </div>
@@ -25,17 +29,13 @@
                 <span class="font-o">USDT</span>
               </div>
               <span class="font-o color-green">
-                {{
-                  textFromWei(userInfo.interest_bearing_principal)
-                }}
+                {{ textFromWei(userInfo.interest_bearing_principal) }}
               </span>
             </div>
             <div class="cell font-o">
               <span class="color-grey">USDT ( ERC20.Ethereum )</span>
               <span>
-                ~ ￥{{
-                  textFromWei(userInfo.interest_bearing_principal) * 6.3
-                }}
+                ~ ￥{{ textFromWei(userInfo.interest_bearing_principal) * 6.3 }}
               </span>
             </div>
           </div>
@@ -89,24 +89,25 @@
           <h3>
             <span>{{ $t("勘察.累积获取利息") }}</span>
             <span class="color-green font-o">
-              {{
-                textFromWei(userInfo.quantity)
-              }}
+              {{ textFromWei(userInfo.quantity) }}
             </span>
           </h3>
           <div class="cell">
             <span>
-              {{ $t("勘察.共计产出利息") }}{{
-                userInfo.withdraw_times
+              {{ $t("勘察.共计产出利息") }}{{ userInfo.withdraw_times
               }}{{ $t("勘察.次") }}
             </span>
-            <span class="color-grey font-o">~ ￥{{ textFromWei(userInfo.quantity) * 6.3 }}</span>
+            <span class="color-grey font-o"
+              >~ ￥{{ textFromWei(userInfo.quantity) * 6.3 }}</span
+            >
           </div>
         </li>
       </ul>
       <div class="right">
         <img class="pc-image" src="@/assets/explore/m-1.png" alt />
-        <button class="theme-button-clip font-o button" @click="withdraw">Receive ---></button>
+        <button class="theme-button-clip font-o button" @click="withdraw">
+          Receive --->
+        </button>
       </div>
     </section>
     <section class="model-2">
@@ -124,13 +125,16 @@
             :element-loading-svg-view-box="svgViewBox"
             element-loading-background="rgba(0, 0, 0, 0.8)"
           >
-            <p class="cell">
-              <span>{{ $t("勘察.余额达到") }}</span>
-              <span>{{ $t("勘察.利息利率") }}</span>
-            </p>
+            <!-- <p class="cell"> -->
+            <!-- <span>{{ $t("勘察.余额达到") }}</span> -->
+            <!-- <span>{{ $t("勘察.利息利率") }}</span> -->
+            <!-- </p> -->
             <p class="cell font-o">
               <!-- <span>≥ 30 USDT</span> -->
-              <el-input v-model.number="userCalcData.modelValue" @change="userCalc">
+              <el-input
+                v-model.number="userCalcData.modelValue"
+                @change="userCalc"
+              >
                 <template #append>USDT</template>
               </el-input>
               <span class="color-green">{{ userCalcData.interestRate }} %</span>
@@ -157,7 +161,11 @@
               <span>{{ $t("勘察.利息") }}</span>
             </p>
             <ul>
-              <li class="cell" v-for="item in InterestReveal.ICArray" :key="item.id">
+              <li
+                class="cell"
+                v-for="item in InterestReveal.ICArray"
+                :key="item.id"
+              >
                 <span>≥ {{ item.conditional }} USDT</span>
                 <span>{{ item.interest }} % USDT {{ $t("勘察.利息") }}</span>
               </li>
@@ -171,7 +179,9 @@
     </section>
     <section class="model-3">
       <p class="model-title">
-        <span class="theme-text-shadow-green">{{ $t("勘察.好友") }} {{ $t("勘察.邀请") }}</span>
+        <span class="theme-text-shadow-green"
+          >{{ $t("勘察.好友") }} {{ $t("勘察.邀请") }}</span
+        >
         {{ $t("勘察.规则") }}
       </p>
       <div class="model-grid">
@@ -204,13 +214,17 @@
           <ul class="invitation">
             <li class="theme-box-shadow">
               <p>{{ $t("勘察.邀请链接") }}</p>
-              <p>http://...</p>
-              <button class="bg-green">{{ $t("勘察.复制") }}</button>
+              <p>{{ slocationLink }}</p>
+              <button class="bg-green" @click="copy(locationLink)">
+                {{ $t("勘察.复制") }}
+              </button>
             </li>
             <li class="theme-box-shadow">
               <p>{{ $t("勘察.邀请码") }}</p>
               <p>{{ truncationAddress(userAddress) }}</p>
-              <button class="bg-green">{{ $t("勘察.复制") }}</button>
+              <button class="bg-green" @click="copy(userAddress)">
+                {{ $t("勘察.复制") }}
+              </button>
             </li>
           </ul>
         </div>
@@ -268,7 +282,9 @@
           </p>
         </div>
         <Link to="/explore">
-          <button class="theme-button-clip font-o button">{{ $t("勘察.联系我们") }} ---></button>
+          <button class="theme-button-clip font-o button">
+            {{ $t("勘察.联系我们") }} --->
+          </button>
         </Link>
       </div>
     </section>
@@ -277,14 +293,19 @@
 
 <script setup>
 import changeLanguageVue from "@/layout/modules/headNav/changeLanguage.vue";
-import { ref, reactive, onMounted, computed } from "vue";
+import { ref, reactive, unref, onMounted, computed } from "vue";
 import {
   PlusElMessage,
   lockLoadHandler,
   LoadSvg,
   svgViewBox,
 } from "@/utils/PlusElement";
-import { ArrayKeysToObject, truncationAddress, deepClone } from "@/utils/tools";
+import {
+  ArrayKeysToObject,
+  truncationAddress,
+  deepClone,
+  copy,
+} from "@/utils/tools";
 import { userInfoInterface, kingSortInterface } from "@/abis/interface";
 import { UseStoreContracts, UseStoreWeb3js } from "@/stores/web3js";
 import { storeToRefs } from "pinia";
@@ -295,6 +316,12 @@ const storeContracts = UseStoreContracts();
 const storeWeb3js = UseStoreWeb3js();
 const { Contracts } = storeToRefs(storeContracts);
 const { userAddress, web3 } = storeToRefs(storeWeb3js);
+const locationLink = computed(
+  () => `${window.location.origin}/#/bindFriends?bind=${userAddress.value}`
+);
+const slocationLink = computed(() =>
+  truncationAddress(unref(locationLink), 4, 8)
+);
 
 onMounted(init);
 async function init() {
@@ -305,6 +332,10 @@ async function init() {
   await startICArray();
   await getKingSort();
   await getTimeTamp();
+  if (!userInfo.f) {
+    console.log(userInfo.f);
+    await join();
+  }
 }
 
 function textFromWei(str) {
@@ -322,16 +353,28 @@ async function join() {
     const balanceOf = await USDTContract.methods
       .balanceOf(userAddress.value)
       .call();
-    const res = await QKContract.methods.join(AbiAddressUSDT, balanceOf).send({
-      from: userAddress.value,
-    });
-    if (res.status) {
+    const fWeiBalanceOf = textFromWei(balanceOf);
+    console.log("balanceOf", fWeiBalanceOf);
+    if (Number(fWeiBalanceOf) <= 0) {
       PlusElMessage({
-        type: "success",
-        message: "join success",
+        type: "error",
+        message: "Your wallet balance is insufficient!",
       });
+    } else {
+      const res = await QKContract.methods
+        .join(AbiAddressUSDT, balanceOf)
+        .send({
+          from: userAddress.value,
+        });
+      if (res.status) {
+        PlusElMessage({
+          type: "success",
+          message: "join success",
+        });
+      }
+      console.log("join-->", res);
     }
-    console.log("join-->", res);
+
     joinActive.value = false;
     load.close();
   } catch (e) {
@@ -371,10 +414,6 @@ async function getUserInfo() {
     userInfo.quantity = _userInfo.quantity;
     userInfo.withdraw_times = _userInfo.withdraw_times;
     // console.log(_userInfo)
-    if (!_userInfo.f) {
-      console.log(_userInfo.f);
-      await join();
-    }
     // load.close()
     userInfo.Load = false;
   } catch (e) {
@@ -679,7 +718,13 @@ async function getTimeTamp() {
 .cell {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+
+  @media screen and (min-width: 769px) {
+    align-items: center;
+  }
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 .theme-box-shadow {
   border-radius: 14px;
@@ -697,6 +742,9 @@ async function getTimeTamp() {
     .balance .info,
     li:not(:first-child) {
       padding: 20px 45px;
+      @media screen and (max-width: 768px) {
+        padding: 10px 15px;
+      }
     }
     li {
       margin-bottom: 20px;

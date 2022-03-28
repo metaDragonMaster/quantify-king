@@ -6,6 +6,8 @@ export default {
         "提现":"Withdraw",
     },
     "导航": {
+        "首页":"home",
+        "量化台":"explore",
         "利息提取记录":"extract",
         "利息收益记录":"profit",
         "绑定好友":"Bind Friends",

@@ -1,4 +1,4 @@
-// import { ElMessage } from "element-plus"
+import { ElMessage } from "element-plus"
 
 /**
  * This is just a simple version of deep copy
@@ -129,14 +129,14 @@ export function copy (text) {
 	const success = document.execCommand('copy');
 	document.body.removeChild(textareaEl);
 	// if (fn) fn(success);
-	// if (success) {
-	// 	ElMessage({
-	// 		type: 'success',
-	// 		message: 'copy success',
-	// 		grouping: true,
-	// 		showClose: true,
-	// 	})
-	// }
+	if (success) {
+		ElMessage({
+			type: 'success',
+			message: 'copy success',
+			grouping: true,
+			showClose: true,
+		})
+	}
 	return success;
 }
 

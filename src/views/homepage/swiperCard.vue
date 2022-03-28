@@ -1,9 +1,14 @@
 <template>
-    <Swiper :slides-per-view="slidesPerViewNum" :scrollbar="{ draggable: true }">
+    <div class="pc-swapier">
+        <Swiper :slides-per-view="slidesPerViewNum" :scrollbar="{ draggable: true }">
         <SwiperSlide v-for="(item) in tList" :key="item.id">
             <TCard :conditional="item.conditional" :interest="item.interest"></TCard>
         </SwiperSlide>
     </Swiper>
+    </div>
+    <ul class="ph-swapier">
+        <li class=""  v-for="(item) in tList" :key="item.id"><TCard :conditional="item.conditional" :interest="item.interest"></TCard></li>
+    </ul>
 </template>
 <script setup>
 import {
@@ -105,5 +110,20 @@ async function getInterest() {
 <style lang="scss" scoped>
 .swiper-slide {
     padding-right: 10px;
+}
+.pc-swapier {
+    display: none;
+    @media screen and (min-width: 769px) {
+        display: block;
+    }
+}
+.ph-swapier {
+    display: none;
+    @media screen and (max-width: 768px) {
+        display: block;
+    }
+    li {
+        margin-bottom: 10px;
+    }
 }
 </style>

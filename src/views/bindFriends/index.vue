@@ -13,7 +13,9 @@
         type="text"
         v-model="userModel"
       />
-      <p v-else class="bind-input">{{ userModel }}</p>
+      <p v-else class="bind-input font-hide">
+        <span>{{ userReAddress }}</span>
+      </p>
       <!-- <Link ></Link> -->
       <button
         v-if="!haveRe"
@@ -23,9 +25,7 @@
         Determino
       </button>
       <Link v-else to="/explore"
-        ><button class="theme-button-clip font-o">
-          to explore
-        </button></Link
+        ><button class="theme-button-clip font-o">to explore</button></Link
       >
     </div>
   </div>
@@ -33,8 +33,10 @@
 
 <script setup>
 // getRes
-import { ref } from "vue";
+import { useRoute } from "vue-router";
+import { ref, computed } from "vue";
 import Decimal from "decimal.js";
+import { truncationAddress } from "@/utils/tools";
 import { PlusElMessage, lockLoadHandler } from "@/utils/PlusElement";
 import { storeToRefs } from "pinia";
 import { UseStoreWeb3js, UseStoreContracts } from "@/stores/web3js";
@@ -47,15 +49,21 @@ const storeCountracts = UseStoreContracts();
 const { Contracts } = storeToRefs(storeCountracts);
 
 const userModel = ref(""); //0x5c2571f4AaBc057a100bDfc058264EEE9C65C3D3
+const userReAddress = computed(() =>
+  haveRe.value ? truncationAddress(userModel.value,8,8) : ""
+);
 const haveRe = ref(false);
-
+const Route = useRoute()
 init();
 async function init() {
   const load = lockLoadHandler("loading...");
+  console.log("Route.query.bind",Route.query)
   haveRe.value = await isRe(userAddress.value);
   load.close();
   if (haveRe.value) {
     userModel.value = await getRes();
+  } else if(Route.query.bind){
+    userModel.value = Route.query.bind
   }
 }
 
@@ -211,6 +219,7 @@ async function increaseAllowance() {
     margin: 65px auto 150px;
     @media screen and (max-width: 768px) {
       margin: 25px auto 40px;
+      padding: 15px 10px;
     }
     &::placeholder {
       color: #ffffff;

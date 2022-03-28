@@ -22,16 +22,22 @@ const whiteRePathList = ["/", "/homepage", "/bindFriends"];
 
 router.beforeEach(async (to, from, next) => {
   const storeWeb3 = UseStoreWeb3js();
-  const { startWeb3 ,haveAuth, haveRe, userAddress} = storeWeb3;
-  // console.log("router beforeEach", to.path);
+  const { startWeb3, haveAuth, haveRe, userAddress } = storeWeb3;
+
+  console.log("router beforeEach---");
+  console.log(to);
   // console.log("router beforeEach haveAuth", haveAuth, "haveRe", haveRe);
   //验证是否被赋予权限
   if (!haveAuth && !whiteRathPathList.includes(to.path)) {
     //没有就去请求
     try {
+      console.log("router beforeEach--- 没有就去请求");
       const queryWeb3 = await startWeb3();
       if (queryWeb3) {
-        next(to.path);
+        console.log("router beforeEach--- queryWeb3");
+        next({
+          ...to,
+        });
       } else {
         next("/homepage");
       }
@@ -42,11 +48,17 @@ router.beforeEach(async (to, from, next) => {
   } else if (!haveRe && !whiteRePathList.includes(to.path)) {
     // console.log("没有推荐人", haveRe);
     const res = await getRes(userAddress);
-    // console.log("router getres", res);
+    console.log("router haveRe---");
     if (res) {
+      console.log("router haveRe--- yes");
       next(to.path);
     } else {
-      next("/bindFriends");
+      console.log("router haveRe--- false");
+      next({
+        query: to.query,
+        params: to.params,
+        path: "/bindFriends",
+      });
     }
   } else {
     next();
