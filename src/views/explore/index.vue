@@ -15,11 +15,7 @@
             <div class="flex">
               <h3>{{ $t("勘察.量化本金") }}</h3>
               <p class="refresh" @click="join">
-                <img
-                  :class="{ active: joinActive }"
-                  src="@/assets/icons/icon-refresh.png"
-                  alt
-                />
+                <img :class="{ active: joinActive }" src="@/assets/icons/icon-refresh.png" alt />
                 <u>{{ $t("勘察.更新量化本金") }}</u>
               </p>
             </div>
@@ -28,17 +24,19 @@
                 <img src="@/assets/icons/b-t.png" alt />
                 <span class="font-o">USDT</span>
               </div>
-              <span class="font-o color-green">{{
-                textFromWei(userInfo.interest_bearing_principal)
-              }}</span>
+              <span class="font-o color-green">
+                {{
+                  textFromWei(userInfo.interest_bearing_principal)
+                }}
+              </span>
             </div>
             <div class="cell font-o">
               <span class="color-grey">USDT ( ERC20.Ethereum )</span>
-              <span
-                >~ ￥{{
+              <span>
+                ~ ￥{{
                   textFromWei(userInfo.interest_bearing_principal) * 6.3
-                }}</span
-              >
+                }}
+              </span>
             </div>
           </div>
         </li>
@@ -59,7 +57,7 @@
             <!-- <p class="color-grey">
                             <span>提取中：</span>
                             <span class="font-o">0</span>
-                        </p>-->
+            </p>-->
           </div>
         </li>
         <li
@@ -90,26 +88,25 @@
         >
           <h3>
             <span>{{ $t("勘察.累积获取利息") }}</span>
-            <span class="color-green font-o">{{
-              textFromWei(userInfo.quantity)
-            }}</span>
+            <span class="color-green font-o">
+              {{
+                textFromWei(userInfo.quantity)
+              }}
+            </span>
           </h3>
           <div class="cell">
-            <span
-              >{{ $t("勘察.共计产出利息") }}{{ userInfo.withdraw_times
-              }}{{ $t("勘察.次") }}</span
-            >
-            <span class="color-grey font-o"
-              >~ ￥{{ textFromWei(userInfo.quantity) * 6.3 }}</span
-            >
+            <span>
+              {{ $t("勘察.共计产出利息") }}{{
+                userInfo.withdraw_times
+              }}{{ $t("勘察.次") }}
+            </span>
+            <span class="color-grey font-o">~ ￥{{ textFromWei(userInfo.quantity) * 6.3 }}</span>
           </div>
         </li>
       </ul>
       <div class="right">
         <img class="pc-image" src="@/assets/explore/m-1.png" alt />
-        <button class="theme-button-clip font-o button" @click="withdraw">
-          Receive --->
-        </button>
+        <button class="theme-button-clip font-o button" @click="withdraw">Receive ---></button>
       </div>
     </section>
     <section class="model-2">
@@ -133,10 +130,7 @@
             </p>
             <p class="cell font-o">
               <!-- <span>≥ 30 USDT</span> -->
-              <el-input
-                v-model.number="userCalcData.modelValue"
-                @change="userCalc"
-              >
+              <el-input v-model.number="userCalcData.modelValue" @change="userCalc">
                 <template #append>USDT</template>
               </el-input>
               <span class="color-green">{{ userCalcData.interestRate }} %</span>
@@ -163,11 +157,7 @@
               <span>{{ $t("勘察.利息") }}</span>
             </p>
             <ul>
-              <li
-                class="cell"
-                v-for="item in InterestReveal.ICArray"
-                :key="item.id"
-              >
+              <li class="cell" v-for="item in InterestReveal.ICArray" :key="item.id">
                 <span>≥ {{ item.conditional }} USDT</span>
                 <span>{{ item.interest }} % USDT {{ $t("勘察.利息") }}</span>
               </li>
@@ -181,9 +171,7 @@
     </section>
     <section class="model-3">
       <p class="model-title">
-        <span class="theme-text-shadow-green"
-          >{{ $t("勘察.好友") }} {{ $t("勘察.邀请") }}</span
-        >
+        <span class="theme-text-shadow-green">{{ $t("勘察.好友") }} {{ $t("勘察.邀请") }}</span>
         {{ $t("勘察.规则") }}
       </p>
       <div class="model-grid">
@@ -212,7 +200,7 @@
           <!-- <div class="theme-box-shadow qrcode flex-column">
                         <img src="@/assets/explore/m-3-t.png" alt />
                         <span>登录后可获取您的二维码</span>
-                    </div>-->
+          </div>-->
           <ul class="invitation">
             <li class="theme-box-shadow">
               <p>{{ $t("勘察.邀请链接") }}</p>
@@ -272,7 +260,7 @@
           <!-- <p>
             <img src="@/assets/icons/icon-i18n-grey.png" alt />
             <span>{{ $t("语言") }}</span>
-          </p> -->
+          </p>-->
           <changeLanguageVue></changeLanguageVue>
           <p>
             <img class="icon" src="@/assets/icons/icon-reserved.png" alt />
@@ -280,9 +268,7 @@
           </p>
         </div>
         <Link to="/explore">
-          <button class="theme-button-clip font-o button">
-            {{ $t("勘察.联系我们") }} --->
-          </button>
+          <button class="theme-button-clip font-o button">{{ $t("勘察.联系我们") }} ---></button>
         </Link>
       </div>
     </section>
