@@ -18,7 +18,7 @@ export default {
                 "1":'Quantitative tool',
                 "2":'aggregation',
                 "3":'platform',
-                "ps":"An easy-to-use, efficient and stable income quantitative tool aggregation platform, supporting BSC, TR, EHT."
+                "ps":"An easy-to-use, efficient and stable income quantitative tool aggregation platform, supporting BSC, TRC, ETH."
             },
             's2':{
                 '1': 'How Quantitative Tools Work',
