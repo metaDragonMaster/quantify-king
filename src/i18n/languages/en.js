@@ -20,7 +20,7 @@ export default {
                 "1":'Quantitative tool',
                 "2":'aggregation',
                 "3":'platform',
-                "ps":"An easy-to-use, efficient and stable income quantitative tool aggregation platform, supporting BSC, TRC, ETH."
+                "ps":"An easy-to-use, efficient and stable income quantitative tool aggregation platform, supporting BSC."//, TRC, ETH
             },
             's2':{
                 '1': 'How Quantitative Tools Work',
@@ -105,4 +105,8 @@ export default {
         "联系我们":"contact us",
         "合作方":"Partners",
     },
+    "绑定好友":{
+        "绑定好友":"Bind | Friends",
+        "邀请码一旦填写不可更改，请认真填写":"Once the invitation code is bound, it cannot be changed. | Please fill in it carefully",
+    }
 }

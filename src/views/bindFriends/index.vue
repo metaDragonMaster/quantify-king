@@ -1,11 +1,11 @@
 <template>
   <div class="bind-friends font-o limit-max-width-media">
     <p class="model-title">
-      <span class="theme-text-shadow-green">BIND</span> Friends
+      <span class="theme-text-shadow-green">{{$t("绑定好友.绑定好友",1)}}</span>{{$t("绑定好友.绑定好友",2)}}
     </p>
     <div class="from theme-box-shadow">
-      <p class="ps">Once the invitation code is bound, it cannot be changed.</p>
-      <p class="ps">Please fill in it carefully</p>
+      <p class="ps">{{$t("绑定好友.邀请码一旦填写不可更改，请认真填写",1)}}</p>
+      <p class="ps">{{$t("绑定好友.邀请码一旦填写不可更改，请认真填写",2)}}</p>
       <input
         v-if="!haveRe"
         class="bind-input"

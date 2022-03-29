@@ -33,9 +33,9 @@
               </span>
             </div>
             <div class="cell font-o">
-              <span class="color-grey">USDT ( ERC20.Ethereum )</span>
+              <span class="color-grey">USDT</span>
               <span>
-                ~ ￥{{ textFromWei(userInfo.interest_bearing_principal) * 6.3 }}
+                ≈ ￥{{ textFromWei(userInfo.interest_bearing_principal) * 6.3 }}
               </span>
             </div>
           </div>
@@ -281,11 +281,11 @@
             <span>Quantify king</span>
           </p>
         </div>
-        <Link to="/explore">
+        <!-- <Link to="/explore">
           <button class="theme-button-clip font-o button">
-            {{ $t("勘察.联系我们") }} --->
+            {{ $t("勘察.联系我们") }}
           </button>
-        </Link>
+        </Link> -->
       </div>
     </section>
   </div>
