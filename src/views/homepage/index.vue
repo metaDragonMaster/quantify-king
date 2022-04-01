@@ -9,7 +9,7 @@
                 <p
                     class="ps font-o"
                 >{{$t("首页.标题.s1.ps")}}</p>
-                
+
                 <Link to="/explore"><button class="theme-button-clip font-o button">Explore ---></button></Link>
             </div>
             <img class="banner" src="@/assets/home/banner-1.png" alt />
@@ -31,23 +31,23 @@
             <p class="module-title font-o">{{$t("首页.标题.s3.1")}}</p>
             <ul class="list">
                 <li class="theme-box-shadow">
-                    <p class="title">{{$t("首页.标题.s3.t1")}}</p>
+                    <p class="title font-o">{{$t("首页.标题.s3.t1")}}</p>
                     <span
                         class="font-o"
                     >{{$t("首页.标题.s3.p1")}}</span>
                 </li>
                 <li class="theme-box-shadow">
-                    <p class="title">{{$t("首页.标题.s3.t2")}}</p>
+                    <p class="title font-o">{{$t("首页.标题.s3.t2")}}</p>
                     <span
                         class="font-o"
                     >{{$t("首页.标题.s3.p2")}}</span>
                 </li>
                 <li class="theme-box-shadow">
-                    <p class="title">{{$t("首页.标题.s3.t3")}}</p>
+                    <p class="title font-o">{{$t("首页.标题.s3.t3")}}</p>
                     <span class="font-o">{{$t("首页.标题.s3.p3")}}</span>
                 </li>
                 <li class="theme-box-shadow">
-                    <p class="title">{{$t("首页.标题.s3.t4")}}</p>
+                    <p class="title font-o">{{$t("首页.标题.s3.t4")}}</p>
                     <span
                         class="font-o"
                     >{{$t("首页.标题.s3.p4")}}</span>

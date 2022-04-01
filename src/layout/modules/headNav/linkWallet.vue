@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { PlusElMessage } from "@/utils/PlusElement"
+// import { PlusElMessage } from "@/utils/PlusElement"
 import {
     computed,
     unref
@@ -35,13 +35,14 @@ function elClick() {
         console.log('获取web3')
         startWeb3();
     } else {
-        const res = copy(unref(userAddress))
-        if (res) {
-            PlusElMessage({
-                type: 'success',
-                message: 'copy success'
-            })
-        }
+        // const res =
+		copy(unref(userAddress))
+        // if (res) {
+        //     PlusElMessage({
+        //         type: 'success',
+        //         message: 'copy success'
+        //     })
+        // }
     }
 }
 

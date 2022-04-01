@@ -24,6 +24,6 @@ export function useVModel(props, name) {
 				type:String
 			}
 		})
-		const value = useVModel(props.inputValue, 'value')
+		const value = useVModel(props, 'value')
 	</script>
 */

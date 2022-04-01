@@ -14,6 +14,12 @@ export default {
         "我的团队":"My Team",
         "团队收益记录":"Team Logs",
     },
+	"时间":{
+		'天':'Day',
+		'小时':'Hour',
+		'分钟':'Minute',
+		'秒':'Second',
+	},
     "首页":{
         "标题": {
             "s1": {
@@ -29,7 +35,7 @@ export default {
             's3':{
                 '1':'Features of Quantitative Tools',
                 't1':'High security',
-                'p1':'No deposit required, users only need to deposit assets into the third-party cooperative wallet APP, no need to deposit to the platform, to ensure asset security.',
+                'p1':'The contract cannot be changed to ensure the security of the assets pledged by the user, which can be accessed at any time, efficient, fast and safe.',
                 't2':'High rate of return',
                 'p2':'The quantification tool runs on the cloud server for 24 hours without interruption of power and network. By accessing different DeFi market data and dynamically adjusting the real-time transaction volume with DeFi tokens, one order can be completed every 0.05 seconds.',
                 't3':'High stability',
@@ -55,6 +61,7 @@ export default {
     "勘察":{
         "量化本金":"Quantified principal",
         "更新量化本金":"Update the quantified principal",
+        "去提现":"Cash out",
         "利息余额":"Interest balance",
         "利率":"Interest rate",
         "利息":"Interest",
@@ -66,6 +73,7 @@ export default {
         "余额":"balance",
         "每8小时可以领取":"Available every 8 hours",
         "每*分钟可以领取":"Available every { n } minutes",
+		"每*可以领取":"Available every { n } ",
         "计算规则":"Calculation Rules",
         "计算器":"Calculator",
         "余额达到":"balance reached",
@@ -104,6 +112,9 @@ export default {
         "复制":"copy",
         "联系我们":"contact us",
         "合作方":"Partners",
+		"存入":"Deposit",
+		"秒后刷新数据":"seconds after refreshing data",
+		"每*秒产出一次利息":"Interest is generated every { n } seconds",
     },
     "绑定好友":{
         "绑定好友":"Bind | Friends",

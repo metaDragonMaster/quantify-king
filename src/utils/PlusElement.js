@@ -1,4 +1,4 @@
-import { ElLoading, ElMessage } from "element-plus";
+import { ElLoading, ElMessage } from 'element-plus';
 /*
 	target	Loading 需要覆盖的 DOM 节点。 可传入一个 DOM 对象或字符串； 若传入字符串，则会将其作为参数传入 document.querySelector以获取到对应 DOM 节点	object/string	—	document.body
 	body	同 v-loading 指令中的 body 修饰符	boolean	—	false
@@ -21,7 +21,7 @@ element-loading-background	背景遮罩的颜色	string
 	element-loading-background="rgba(0, 0, 0, 0.8)"
 */
 
-export const LoadBackground = 'rgba(0, 0, 0, 0.8)'
+export const LoadBackground = 'rgba(0, 0, 0, 0.8)';
 export const LoadSvg = `
   <path class="path" d="
     M 30 15
@@ -32,35 +32,31 @@ export const LoadSvg = `
     L 15 15
   " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
 `;
-export const svgViewBox = "-10, -10, 50, 50";
+export const svgViewBox = '-10, -10, 50, 50';
 export const lockLoadHandler = (text) => {
-  return ElLoading.service({
-    lock: true,
-    text: text,
-    spinner: LoadSvg,
-    svgViewBox: svgViewBox,
-    background: LoadBackground,
-  });
+	return ElLoading.service({
+		lock: true,
+		text: text,
+		spinner: LoadSvg,
+		svgViewBox: svgViewBox,
+		background: LoadBackground,
+	});
 };
 
-
-export async function tryFunction(fn, errFn, loadText = "loading...") {
-  const lockLoad = lockLoadHandler(loadText);
-  try {
-    if (fn) {
-      await fn(lockLoad);
-    }
-    lockLoad.close();
-  } catch (error) {
-    console.error(error);
-    errFn(error);
-    lockLoad.close();
-  }
-}
+export const PlusElMessageByCatch = (e) => {
+	return ElMessage({
+		grouping: true,
+		showClose: true,
+		duration: 0,
+		type: 'error',
+		message: e.message,
+	});
+};
 export const PlusElMessage = (option) => {
-  return ElMessage({
-    grouping: true,
-    showClose: true,
-    ...option,
-  });
+	if(option.type == 'error') option.duration = 0
+	return ElMessage({
+		grouping: true,
+		showClose: true,
+		...option,
+	});
 };

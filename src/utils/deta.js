@@ -33,6 +33,17 @@
 
 */
 
+export function formatTimeDown(time) {
+	const day = Math.floor(time / (60 * 60 * 24)); //计算天数
+	const hour = Math.floor((time / (60 * 60)) % 24); //计算小时数
+	const minute = Math.floor((time / 60) % 60); //计算分钟数
+	const second = Math.floor(time % 60); //计算秒数
+	return {
+		day, hour, minute, second
+	}
+}
+
+
 /**
  * @description 格式化时间
  * @param time
