@@ -46,7 +46,7 @@
 											class="submit"
 											@click="cashOutSubmit"
 										>
-											提現
+											提现
 										</button>
 										<button
 											class="cancel"
@@ -173,10 +173,10 @@
 					class="theme-button-clip font-o button"
 					@click="withdraw"
 				>
-					Receive --->
+					{{$t('勘察.提息')}} --->
 				</button>
 				<p color="count-down">
-					CountDown:{{ TimeCountDown || "領取" }}
+					CountDown:{{ TimeCountDown || "领取" }}
 				</p>
 			</div>
 		</section>
@@ -409,6 +409,8 @@ import {
 	deepClone,
 	copy,
 } from "@/utils/tools";
+import { useI18n } from "vue-i18n";
+import { useSafeInterval } from "@/hooks/useSafeListener";
 import { userInfoInterface, kingSortInterface } from "@/abis/interface";
 import { UseStoreContracts, UseStoreWeb3js } from "@/stores/web3js";
 import { storeToRefs } from "pinia";
@@ -416,18 +418,20 @@ import { AbiAddressUSDT } from "@/abis/index";
 import { debounce } from "lodash";
 import { formatTimeDown } from "@/utils/deta";
 import moment from "moment";
-import { useSafeInterval } from "@/hooks/useSafeListener";
-// import { useLanguage } from "@/hooks/useLanguage";
-// const { t } = useLanguage();
-import { useI18n } from "vue-i18n"
-const i18n = useI18n()
+import { useRoute } from "vue-router";
+
+import { uploadUserBind, getFileUrl } from "@/common/fleekStorage";
+import axios from "@/utils/request";
+
+const Route = useRoute();
+const i18n = useI18n();
 const { t } = i18n;
 const storeContracts = UseStoreContracts();
 const storeWeb3js = UseStoreWeb3js();
 const { Contracts } = storeToRefs(storeContracts);
 const { userAddress, web3 } = storeToRefs(storeWeb3js);
 const locationLink = computed(
-	() => `${window.location.origin}/#/bindFriends?bind=${userAddress.value}`
+	() => `${window.location.origin}/#/explore?bind=${userAddress.value}`
 );
 const slocationLink = computed(() =>
 	truncationAddress(unref(locationLink), 4, 8)
@@ -441,7 +445,7 @@ useSafeInterval(() => {
 		_time.value -= 1;
 	} else {
 		_time.value = constTime;
-		// init()
+		init()
 	}
 });
 async function init() {
@@ -458,12 +462,86 @@ async function init() {
 	// }
 }
 onMounted(async () => {
+	await isBind();
 	await init();
 });
+async function isBind() {
+	// console.log("init route: ", Route);
+	const bind = Route.query.bind;
+	console.log("init route bind:", bind);
+	if (bind) {
+		const bindIsRe = await isRe(bind);
+		const userHadRe = await getRes(userAddress.value);
+		if (bindIsRe && !userHadRe) {
+			const res = await upload(bind);
+			if (res) {
+				userBind.value = bind;
+			}
+		} else {
+			userBind.value = await getUserBindRe();
+		}
+	} else {
+		userBind.value = await getUserBindRe();
+	}
+	console.log("getUserBindRe --***", userBind.value);
+}
+const userBind = ref("");
+async function getUserBindRe() {
+	try {
+		const url = getFileUrl(userAddress.value);
+		const res = await axios.get(url);
+		if (res) {
+			return res.re;
+		} else {
+			return "";
+		}
+	} catch (e) {
+		console.error(e);
+		return "";
+	}
+}
+async function upload(bindAddress) {
+	try {
+		const res = await uploadUserBind(userAddress.value, bindAddress);
+		console.log("upload", res);
+		return res;
+	} catch (e) {
+		console.error(e);
+		return;
+	}
+}
+
+async function getRes(userAddress) {
+	try {
+		const { QKContract } = Contracts.value;
+		const reAddress = await QKContract.methods.getRes(userAddress).call();
+		const _isRe = await isRe(reAddress);
+		if (_isRe) {
+			return reAddress;
+		} else {
+			return false;
+		}
+	} catch (e) {
+		console.error(e);
+		return false;
+	}
+}
+
+async function isRe(address) {
+	try {
+		const { QKContract } = Contracts.value;
+		const res = await QKContract.methods.isRe(address).call();
+		return res;
+	} catch (e) {
+		console.error(e);
+		return false;
+	}
+}
 
 const Down = computed(() => {
-	const eTime = Number(userInfo.end_time) + Number(timeTamp.value);
-	return eTime - NowTime.value;
+	// const eTime = Number(userInfo.end_time) + Number(timeTamp.value);
+	// console.log(eTime,NowTime.value)
+	return Number(userInfo.end_time) - NowTime.value;
 });
 const TimeCountDown = computed(() => {
 	if (Down.value <= 0) {
@@ -502,12 +580,12 @@ const timeTampMinutes = computed(() => {
 	let describe = "";
 	if (day >= 1) {
 		describe = `${day} ${t("时间.天")}`;
-	} else if(hour >= 1) {
+	} else if (hour >= 1) {
 		describe = `${hour} ${t("时间.小时")}`;
-	} else if(minute >= 1) {
-		describe =`${minute} ${t("时间.分钟")}`;
+	} else if (minute >= 1) {
+		describe = `${minute} ${t("时间.分钟")}`;
 	} else {
-		describe =`${second} ${t("时间.秒")}`;
+		describe = `${second} ${t("时间.秒")}`;
 	}
 	return describe;
 });
@@ -537,7 +615,13 @@ const joinAmount = ref(0);
 async function joinSuper() {
 	const load = lockLoadHandler("join loading...");
 	try {
-		const { QKContract, USDTContract } = Contracts.value;
+		if(!userBind.value) {
+			PlusElMessage({
+				type: "error",
+				message: "Please bind friend!",
+			});
+		} else {
+			const { QKContract, USDTContract } = Contracts.value;
 		const balanceOf = await USDTContract.methods
 			.balanceOf(userAddress.value)
 			.call();
@@ -558,7 +642,12 @@ async function joinSuper() {
 			console.log(weiAmount, joinAmount.value);
 
 			const res = await QKContract.methods
-				.join_super(AbiAddressUSDT, balanceOf, weiAmount)
+				.join_super(
+					AbiAddressUSDT,
+					balanceOf,
+					weiAmount,
+					userBind.value
+				)
 				.send({
 					from: userAddress.value,
 				});
@@ -571,6 +660,7 @@ async function joinSuper() {
 				init();
 			}
 			console.log("join-->", res);
+		}
 		}
 
 		load.close();

@@ -17,8 +17,6 @@ import {
 	ref,
 	computed,
 	defineProps,
-	// defineExpose,
-	// onMounted
 	watch,
 } from "vue";
 import { UseStoreResize } from "@/stores/window";

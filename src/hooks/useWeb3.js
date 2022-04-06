@@ -34,12 +34,12 @@ async function getEth() {
   }
 }
 export async function useWeb3(callback) {
-	//正在获取授权 
+	//正在获取授权
   const loadHandler = lockLoadHandler("Getting Authorization...");
   try {
     const web3Provider = await getEth();
-    const userAddress = await web3Provider.enable(); //hte enable function will be removed
-    // const userAddress = await web3Provider.request({ method: 'eth_requestAccounts' });
+    // const userAddress = await web3Provider.enable(); //hte enable function will be removed
+    const userAddress = await web3Provider.request({ method: 'eth_requestAccounts' });
     // console.log(userAddress[0])
     const web3 = new Web3(web3Provider);
     loadHandler.close();

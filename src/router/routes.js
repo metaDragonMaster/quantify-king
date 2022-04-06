@@ -30,14 +30,14 @@ const routes = [
         },
         component: () => import("@/views/explore/index.vue"),
       },
-      {
-        path: "/bindFriends",
-        name: "bindFriends",
-        meta: {
-          title: "绑定好友",
-        },
-        component: () => import("@/views/bindFriends/index.vue"),
-      },
+    //   {
+    //     path: "/bindFriends",
+    //     name: "bindFriends",
+    //     meta: {
+    //       title: "绑定好友",
+    //     },
+    //     component: () => import("@/views/bindFriends/index.vue"),
+    //   },
       // {
       //   path: "/profitLog",
       //   name: "profitLog",

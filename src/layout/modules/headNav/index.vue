@@ -22,7 +22,7 @@
             >
               <Link to="/homepage">{{ $t("导航.首页") }}</Link>
               <Link to="/explore">{{ $t("导航.量化台") }}</Link>
-              <Link to="/bindFriends">{{ $t("导航.绑定好友") }}</Link>
+              <!-- <Link to="/bindFriends">{{ $t("导航.绑定好友") }}</Link> -->
               <Link to="/team/myTeam">{{ $t("导航.我的团队") }}</Link>
               <Link to="/team/teamLogs">{{ $t("导航.团队收益记录") }}</Link>
             </div>
@@ -41,7 +41,7 @@
         <div class="nav-list">
           <Link to="/homepage">{{ $t("导航.首页") }}</Link>
           <Link to="/explore">{{ $t("导航.量化台") }}</Link>
-          <Link to="/bindFriends">{{ $t("导航.绑定好友") }}</Link>
+          <!-- <Link to="/bindFriends">{{ $t("导航.绑定好友") }}</Link> -->
           <Link to="/team/myTeam">{{ $t("导航.我的团队") }}</Link>
           <Link to="/team/teamLogs">{{ $t("导航.团队收益记录") }}</Link>
         </div>

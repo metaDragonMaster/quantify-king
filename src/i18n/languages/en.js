@@ -115,6 +115,7 @@ export default {
 		"存入":"Deposit",
 		"秒后刷新数据":"seconds after refreshing data",
 		"每*秒产出一次利息":"Interest is generated every { n } seconds",
+		"提息":"Receive",
     },
     "绑定好友":{
         "绑定好友":"Bind | Friends",
