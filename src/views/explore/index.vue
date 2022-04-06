@@ -216,7 +216,7 @@
 						<div class="bg-green color-green font-o">
 							<p>
 								{{
-									$t("勘察.每*分钟可以领取", {
+									$t("勘察.每*可以领取", {
 										n: timeTampMinutes,
 									})
 								}}
