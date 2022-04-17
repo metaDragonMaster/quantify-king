@@ -29,10 +29,10 @@ const nav = computed(() => [
         path: '/team/myTeam',
         title: t('导航.我的团队')
     },
-    {
-        path: '/team/teamLogs',
-        title: t('导航.团队收益记录')
-    },
+    // {
+    //     path: '/team/teamLogs',
+    //     title: t('导航.团队收益记录')
+    // },
 ])
 </script>
 <style lang='scss' scoped>

@@ -82,14 +82,14 @@ const routes = [
               title: "我的团队",
             },
           },
-          {
-            path: "teamLogs",
-            name: "teamLogs",
-            component: () => import("@/views/team/teamLogs/index.vue"),
-            meta: {
-              title: "团队收益记录",
-            },
-          },
+          // {
+          //   path: "teamLogs",
+          //   name: "teamLogs",
+          //   component: () => import("@/views/team/teamLogs/index.vue"),
+          //   meta: {
+          //     title: "团队收益记录",
+          //   },
+          // },
         ],
       },
     ],

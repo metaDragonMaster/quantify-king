@@ -4,6 +4,7 @@
     interest_bearing_principal: "0" //本金
     quantity: "0" //已提取
     withdraw_times: "0" //提取次数
+	freeze:false,// 是否冻结
 */
 export const userInfoInterface = [
     'end_time',
@@ -11,6 +12,7 @@ export const userInfoInterface = [
     'interest_bearing_principal',
     'quantity',
     'withdraw_times',
+	'freeze'
 ];
 export const kingSortInterface = [
     '_released',

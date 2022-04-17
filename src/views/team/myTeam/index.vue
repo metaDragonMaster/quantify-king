@@ -23,7 +23,7 @@
       </li>
     </ul>
     <div class="table-content">
-      <p class="title font-o">
+      <!-- <p class="title font-o">
         团队累计本金 :
         <span class="color-green">
           {{ userAllReBalance.principal }}
@@ -36,7 +36,7 @@
           {{ userAllReBalance.profit }}
           USDT
         </span>
-      </p>
+      </p> -->
       <p class="title font-o my">
         我的收益 ：
         <span class="color-green">{{ myInterests }} USDT</span>

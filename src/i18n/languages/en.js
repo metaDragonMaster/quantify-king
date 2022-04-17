@@ -66,7 +66,7 @@ export default {
         "利率":"Interest rate",
         "利息":"Interest",
         "每8小时可领取":"Available every 8 hours",
-        "累积获取利息":"Accumulate interest",
+        "累积提取利息":"Accumulate interest",
         "共计产出利息":"Total interest",
         "次":"times",
         "天":"day",

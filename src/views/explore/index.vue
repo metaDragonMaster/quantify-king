@@ -1,5 +1,11 @@
 <template>
 	<div class="explore limit-max-width-media">
+		<!-- <div>
+			{{ moment(userInfo.end_time * 1000).format("yyyy-MM-DD HH:mm:ss") }}
+		</div>
+		<div>{{ timeTamp }}</div>
+		<div>{{ moment(NowTime * 1000).format("yyyy-MM-DD HH:mm:ss") }}</div> -->
+		<!-- <div>userBind: {{ userBind }}</div> -->
 		<section class="model-1 model-grid">
 			<ul class="wallet">
 				<li
@@ -18,7 +24,7 @@
 							<!-- <p class="refresh" @click="join">
 								<img :class="{ active: joinActive }" src="@/assets/icons/icon-refresh.png" alt />
 								<u>{{ $t("勘察.去提现") }}</u>
-							</p> -->
+							</p>-->
 							<p class="cash-out" @click="openCashOut">
 								<img
 									src="@/assets/icons/icon-cash-out.png"
@@ -29,9 +35,9 @@
 							<Mask v-model:show="cashOut.maskShow">
 								<div class="cash-out-dialog">
 									<p class="title font-o">
-										<span class="ps"
-											>{{ $t("勘察.量化本金") }}
-										</span>
+										<span class="ps">{{
+											$t("勘察.量化本金")
+										}}</span>
 										<span>{{ weiUserinterest }}</span>
 									</p>
 									<el-input-number
@@ -63,13 +69,13 @@
 								<img src="@/assets/icons/b-t.png" alt />
 								<span class="font-o">USDT</span>
 							</div>
-							<span class="font-o color-green">
-								{{ weiUserinterest }}
-							</span>
+							<span class="font-o color-green">{{
+								weiUserinterest
+							}}</span>
 						</div>
 						<div class="cell font-o">
 							<span class="color-grey">USDT</span>
-							<span> ≈ ￥{{ weiUserinterest * 6.3 }} </span>
+							<span>≈ ￥{{ weiUserinterest * 6.3 }}</span>
 						</div>
 					</div>
 					<div class="deposit theme-box-shadow">
@@ -95,7 +101,6 @@
 				>
 					<div class="cell">
 						<h3>{{ $t("勘察.利息余额") }}</h3>
-
 						<p>
 							<img
 								class="icon"
@@ -107,9 +112,7 @@
 							}}</span>
 						</p>
 					</div>
-					<div>
-						{{ $t("勘察.每*秒产出一次利息", { n: "30" }) }}
-					</div>
+					<!-- <div>{{ $t("勘察.每*秒产出一次利息", { n: "30" }) }}</div> -->
 				</li>
 				<li
 					class="theme-box-shadow"
@@ -148,22 +151,23 @@
 					element-loading-background="rgba(0, 0, 0, 0.8)"
 				>
 					<h3 class="cell">
-						<span>{{ $t("勘察.累积获取利息") }}</span>
-						<span class="color-green font-o">
-							{{ textFromWei(userInfo.quantity) }} USDT
-						</span>
+						<span>{{ $t("勘察.累积提取利息") }}</span>
+						<span class="color-green font-o"
+							>{{ textFromWei(userInfo.quantity) }} USDT</span
+						>
 					</h3>
-					<div class="cell">
+					<!-- <div class="cell">
 						<span>
-							{{ $t("勘察.共计产出利息")
+							{{
+								$t("勘察.共计产出利息")
 							}}{{ userInfo.withdraw_times }}{{ $t("勘察.次") }}
 						</span>
-						<span class="color-grey font-o"
-							>≈ ￥{{
+						<span class="color-grey font-o">
+							≈ ￥{{
 								textFromWei(userInfo.quantity) * 6.3
-							}}</span
-						>
-					</div>
+							}}
+						</span>
+					</div>-->
 				</li>
 			</ul>
 			<div class="right">
@@ -173,18 +177,16 @@
 					class="theme-button-clip font-o button"
 					@click="withdraw"
 				>
-					{{$t('勘察.提息')}} --->
+					{{ $t("勘察.提息") }} --->
 				</button>
-				<p color="count-down">
-					CountDown:{{ TimeCountDown || "领取" }}
-				</p>
+				<p color="count-down">CountDown:{{ TimeCountDown }}</p>
 			</div>
 		</section>
 		<section class="model-2">
 			<p class="model-title">
-				<span class="theme-text-shadow-green">{{
-					$t("勘察.利息")
-				}}</span>
+				<span class="theme-text-shadow-green">
+					{{ $t("勘察.利息") }}
+				</span>
 				{{ $t("勘察.计算规则") }}
 			</p>
 			<div class="model-grid">
@@ -222,9 +224,9 @@
 								}}
 							</p>
 							<p>
-								<span class="usdt-num">{{
-									userCalcEveryTime
-								}}</span>
+								<span class="usdt-num">
+									{{ userCalcEveryTime }}
+								</span>
 								USDT
 							</p>
 						</div>
@@ -249,10 +251,10 @@
 								:key="item.id"
 							>
 								<span>≥ {{ item.conditional }} USDT</span>
-								<span
-									>{{ item.interest }} % USDT
-									{{ $t("勘察.利息") }}</span
-								>
+								<span>
+									{{ item.interest }} % USDT
+									{{ $t("勘察.利息") }}
+								</span>
 							</li>
 						</ul>
 					</div>
@@ -281,15 +283,21 @@
 					>
 						<p class="cell">
 							<span>{{ $t("勘察.一级好友的分红比例") }}</span>
-							<span class="font-o">{{ ReFees.List[0] }}%</span>
+							<span class="font-o"
+								>{{ ReFees.List[0] / 10 }}%</span
+							>
 						</p>
 						<p class="cell">
 							<span>{{ $t("勘察.二级好友的分红比例") }}</span>
-							<span class="font-o">{{ ReFees.List[1] }}%</span>
+							<span class="font-o"
+								>{{ ReFees.List[1] / 10 }}%</span
+							>
 						</p>
 						<p class="cell">
 							<span>{{ $t("勘察.三级好友的分红比例") }}</span>
-							<span class="font-o">{{ ReFees.List[2] }}%</span>
+							<span class="font-o"
+								>{{ ReFees.List[2] / 10 }}%</span
+							>
 						</p>
 					</div>
 					<!-- <div class="theme-box-shadow qrcode flex-column">
@@ -307,13 +315,15 @@
 								{{ $t("勘察.复制") }}
 							</button>
 						</li>
-						<li class="theme-box-shadow">
-							<p>{{ $t("勘察.邀请码") }}</p>
-							<p>{{ truncationAddress(userAddress) }}</p>
-							<button class="bg-green" @click="copy(userAddress)">
-								{{ $t("勘察.复制") }}
-							</button>
-						</li>
+						<!--
+							<li class="theme-box-shadow">
+								<p>{{ $t("勘察.邀请码") }}</p>
+								<p>{{ truncationAddress(userAddress) }}</p>
+								<button class="bg-green" @click="copy(userAddress)">
+									{{ $t("勘察.复制") }}
+								</button>
+							</li>
+						-->
 					</ul>
 				</div>
 				<div>
@@ -323,9 +333,9 @@
 		</section>
 		<section class="model-4">
 			<p class="model-title">
-				<span class="theme-text-shadow-green">{{
-					$t("勘察.利息收益")
-				}}</span>
+				<span class="theme-text-shadow-green">
+					{{ $t("勘察.利息收益") }}
+				</span>
 				{{ $t("勘察.排行榜") }}
 			</p>
 			<div class="model-grid">
@@ -339,10 +349,9 @@
 				>
 					<p class="cell title">
 						<span class="font-o">Address</span>
-						<span
-							>{{ $t("勘察.累积收益")
-							}}{{ $t("勘察.利息") }}</span
-						>
+						<span>
+							{{ $t("勘察.累积收益") }}{{ $t("勘察.利息") }}
+						</span>
 					</p>
 					<ul class="font-o address-list">
 						<li
@@ -395,10 +404,9 @@
 <script setup>
 import Mask from "@/components/Mask";
 import changeLanguageVue from "@/layout/modules/headNav/changeLanguage.vue";
-import { ref, reactive, unref, onMounted, computed } from "vue";
+import { ref, watch, reactive, unref, onMounted, computed } from "vue";
 import {
 	PlusElMessage,
-	PlusElMessageByCatch,
 	lockLoadHandler,
 	LoadSvg,
 	svgViewBox,
@@ -420,7 +428,11 @@ import { formatTimeDown } from "@/utils/deta";
 import moment from "moment";
 import { useRoute } from "vue-router";
 
-import { uploadUserBind, getFileUrl } from "@/common/fleekStorage";
+import {
+	uploadUserBind,
+	getFileUrl,
+	uploadReUsers,
+} from "@/common/fleekStorage";
 import axios from "@/utils/request";
 
 const Route = useRoute();
@@ -439,52 +451,82 @@ const slocationLink = computed(() =>
 const NowTime = ref(0);
 const constTime = 30;
 const _time = ref(constTime);
+const _tiemDownLock = ref(false);
 useSafeInterval(() => {
 	NowTime.value = moment(new Date()).unix();
-	if (_time.value > 0) {
-		_time.value -= 1;
-	} else {
-		_time.value = constTime;
-		init()
+	if (!_tiemDownLock.value) {
+		if (_time.value > 0) {
+			_time.value -= 1;
+		} else {
+			_time.value = constTime;
+			init();
+		}
 	}
 });
+onMounted(async () => {
+	await isBind();
+	await init();
+});
+watch(
+	() => userAddress.value,
+	async () => {
+		userBind.value = "";
+		await isBind();
+		await init();
+	}
+);
 async function init() {
+	_tiemDownLock.value = true;
 	await getUserInfo();
-	//   await calculateEarnings();
 	await startEarning();
 	await getReFee();
 	await startICArray();
 	await getKingSort();
 	await getTimeTamp();
-	// if (!userInfo.f) {
-	// 	console.log(userInfo.f);
-	// 	await join();
-	// }
+	_tiemDownLock.value = false;
 }
-onMounted(async () => {
-	await isBind();
-	await init();
-});
 async function isBind() {
 	// console.log("init route: ", Route);
 	const bind = Route.query.bind;
 	console.log("init route bind:", bind);
-	if (bind) {
-		const bindIsRe = await isRe(bind);
-		const userHadRe = await getRes(userAddress.value);
-		if (bindIsRe && !userHadRe) {
-			const res = await upload(bind);
-			if (res) {
-				userBind.value = bind;
-			}
-		} else {
-			userBind.value = await getUserBindRe();
-		}
-	} else {
-		userBind.value = await getUserBindRe();
+	const hadRe = await getUserBindRe();
+	console.log("hadRe", hadRe);
+	if (hadRe) {
+		userBind.value = hadRe;
+	} else if (bind) {
+		await uploadBindUser(bind);
 	}
-	console.log("getUserBindRe --***", userBind.value);
+	console.log("getUserBindRe userBind-->>", userBind.value);
 }
+async function uploadBindUser(bind) {
+	const bindIsRe = await isRe(bind);
+	const userHadRe = await getRes(userAddress.value);
+	console.log("isBind", bindIsRe, userHadRe);
+	console.log("isBind", bindIsRe && userHadRe == false);
+	if (!bindIsRe) {
+		PlusElMessage({
+			type: "error",
+			message: "Your friend is't a recommender!",
+		});
+	} else if (userHadRe != false) {
+		PlusElMessage({
+			type: "error",
+			message: "You already had a recommender!",
+		});
+	} else {
+		const res = await upload(bind);
+		console.log("getUserBindRe upload-->>");
+		if (res) {
+			userBind.value = bind;
+		} else {
+			PlusElMessage({
+				type: "error",
+				message: "Failed to upload recommender! please try again.",
+			});
+		}
+	}
+}
+
 const userBind = ref("");
 async function getUserBindRe() {
 	try {
@@ -497,14 +539,17 @@ async function getUserBindRe() {
 		}
 	} catch (e) {
 		console.error(e);
-		return "";
+		console.log("getUserBindRe - axios error");
+		return;
 	}
 }
 async function upload(bindAddress) {
 	try {
+		console.log("upload");
 		const res = await uploadUserBind(userAddress.value, bindAddress);
-		console.log("upload", res);
-		return res;
+		const ReRes = await uploadReUsers(userAddress.value, bindAddress);
+		console.log("upload");
+		return res && ReRes;
 	} catch (e) {
 		console.error(e);
 		return;
@@ -541,11 +586,14 @@ async function isRe(address) {
 const Down = computed(() => {
 	// const eTime = Number(userInfo.end_time) + Number(timeTamp.value);
 	// console.log(eTime,NowTime.value)
-	return Number(userInfo.end_time) - NowTime.value;
+	return Number(userInfo.end_time) + Number(timeTamp.value) - NowTime.value;
 });
 const TimeCountDown = computed(() => {
+	if (earning.interest <= 0 && Down.value <= 0) {
+		return "暂无利息";
+	}
 	if (Down.value <= 0) {
-		return "";
+		return "领取";
 	} else {
 		const format = formatTimeDown(Down.value);
 		const _day = myFormat(format.day);
@@ -598,10 +646,10 @@ async function getTimeTamp() {
 		timeTamp.value = res;
 	} catch (e) {
 		console.error(e);
-		PlusElMessage({
-			type: "error",
-			message: e.message,
-		});
+		// PlusElMessage({
+		// 	type: "error",
+		// 	message: e.message,
+		// });
 	}
 }
 
@@ -614,63 +662,81 @@ function textToWei(str) {
 const joinAmount = ref(0);
 async function joinSuper() {
 	const load = lockLoadHandler("join loading...");
+	_tiemDownLock.value = true;
 	try {
-		if(!userBind.value) {
+		//
+		if (!userBind.value) {
 			PlusElMessage({
 				type: "error",
 				message: "Please bind friend!",
 			});
 		} else {
-			const { QKContract, USDTContract } = Contracts.value;
-		const balanceOf = await USDTContract.methods
-			.balanceOf(userAddress.value)
-			.call();
-		const fWeiBalanceOf = textFromWei(balanceOf);
-		console.log("balanceOf", fWeiBalanceOf);
-		if (Number(fWeiBalanceOf) <= 0) {
-			PlusElMessage({
-				type: "error",
-				message: "Your wallet balance is insufficient!",
-			});
-		} else if (joinAmount.value <= 0) {
-			PlusElMessage({
-				type: "error",
-				message: "Please enter the correct amount!",
-			});
-		} else {
 			const weiAmount = textToWei(joinAmount.value);
-			console.log(weiAmount, joinAmount.value);
+			const { QKContract, USDTContract } = Contracts.value;
+			const balanceOf = await USDTContract.methods
+				.balanceOf(userAddress.value)
+				.call();
+			const fWeiBalanceOf = textFromWei(balanceOf);
+			console.log("balanceOf", fWeiBalanceOf);
 
-			const res = await QKContract.methods
-				.join_super(
-					AbiAddressUSDT,
-					balanceOf,
-					weiAmount,
-					userBind.value
-				)
-				.send({
-					from: userAddress.value,
-				});
-			if (res.status) {
+			// else if (InterestReveal.ICArray[0] && InterestReveal.ICArray[0].conditional > weiAmount) {
+			// 	PlusElMessage({
+			// 		type: "error",
+			// 		message: `least ${InterestReveal.ICArray[0].conditional} USDT!`,
+			// 	});
+			// }
+			if (joinAmount.value <= 0) {
 				PlusElMessage({
-					type: "success",
-					message: "join success",
+					type: "error",
+					message: "Please enter the correct amount!",
 				});
-				joinAmount.value = 0;
-				init();
-			}
-			console.log("join-->", res);
-		}
-		}
+			} else if (Number(fWeiBalanceOf) <= 0) {
+				PlusElMessage({
+					type: "error",
+					message: "Your wallet balance is insufficient!",
+				});
+			} else {
+				console.log(weiAmount, joinAmount.value);
+				console.log("userBind", userBind.value);
+				const userBindRe = await getRes(userAddress.value);
+				console.log("userBindRe", userBindRe);
+				const res = await QKContract.methods
+					.join_super(
+						AbiAddressUSDT,
+						// balanceOf,
+						weiAmount,
+						userBind.value
+					)
+					.send({
+						from: userAddress.value,
+					});
+				console.log("join-->", res);
 
+				if (res.status) {
+					PlusElMessage({
+						type: "success",
+						message: "join success",
+					});
+					joinAmount.value = 0;
+					init();
+				} else {
+					PlusElMessage({
+						type: "error",
+						message: "join failed",
+					});
+				}
+			}
+		}
+		_tiemDownLock.value = false;
 		load.close();
 	} catch (e) {
 		console.error(e);
+		_tiemDownLock.value = false;
 		load.close();
-		PlusElMessage({
-			type: "error",
-			message: e.message,
-		});
+		// PlusElMessage({
+		// 	type: "error",
+		// 	message: e.message,
+		// });
 	}
 }
 const cashOut = reactive({
@@ -710,7 +776,7 @@ async function cashOutSubmit() {
 
 		load.close();
 	} catch (err) {
-		PlusElMessageByCatch(err);
+		// PlusElMessageByCatch(err);
 		load.close();
 	}
 }
@@ -914,10 +980,10 @@ async function startICArray() {
 		console.error(e);
 		// load.close()
 		InterestReveal.Load = false;
-		PlusElMessage({
-			type: "error",
-			message: "invalid",
-		});
+		// PlusElMessage({
+		// 	type: "error",
+		// 	message: "invalid",
+		// });
 	}
 }
 async function getConditionalValue() {
@@ -962,10 +1028,10 @@ async function withdraw() {
 		load.close();
 	} catch (e) {
 		console.error(e);
-		PlusElMessage({
-			type: "error",
-			message: e.message,
-		});
+		// PlusElMessage({
+		// 	type: "error",
+		// 	message: e.message,
+		// });
 		load.close();
 	}
 }
@@ -981,29 +1047,12 @@ async function getKingSort() {
 		const { QKContract } = Contracts.value;
 		const res = await QKContract.methods
 			.get_king_sort(AbiAddressUSDT)
-			.call();
-		// console.log("getKingSort res", res)
-		const reverseRes = deepClone(res)
-			.reverse()
-			.map((item) => {
-				return ArrayKeysToObject(item, kingSortInterface);
-			});
-		// console.log("getKingSort reverseRes", reverseRes)
-		let usList = []; //记录已经被载入的用户地址
-		let sortList = reverseRes.filter((item) => {
-			// 最多加载十条
-			// 由于数据会自动把
-			const hadUs = usList.length >= 10 || usList.includes(item._us);
-			!hadUs && usList.push(item._us);
-			return !hadUs;
-		});
-		// console.log("getKingSort sortList", sortList)
-		KingSortData.List = sortList.map((item) => {
-			item.id = item._us;
-			item._released = textFromWei(item._released);
-			item._us = truncationAddress(item._us);
-			return item;
-		});
+			.call()
+			.then((res) =>
+				res.map((item) => ArrayKeysToObject(item, kingSortInterface))
+			);
+		console.log("getKingSort res", res);
+		KingSortData.List = sortKingData(res);
 		// console.log("getKingSort withdrawList", KingSortData.List)
 		KingSortData.Load = false;
 		return res;
@@ -1011,6 +1060,36 @@ async function getKingSort() {
 		console.error(e);
 		KingSortData.Load = false;
 	}
+}
+
+function sortKingData(data) {
+	// let usList = []; //记录已经被载入的用户地址
+	// const reverseRes = deepClone(data)
+	// 	.filter((item) => {
+	// 		// 最多加载十条
+	// 		if (
+	// 			item._us == "0x0000000000000000000000000000000000000000" ||
+	// 			usList.length >= 10
+	// 		)
+	// 			return false;
+	// 		const hadUs = usList.includes(item._us);
+	// 		!hadUs && usList.push(item._us);
+	// 		return !hadUs;
+	// 	});
+
+	const reverseRes = deepClone(data)
+		.filter(
+			(item) => item._us != "0x0000000000000000000000000000000000000000"
+		)
+		.map((item) => {
+			item.id = item._us;
+			item._released = textFromWei(item._released);
+			item._us = truncationAddress(item._us);
+			return item;
+		})
+		.sort((p, n) => n._released - p._released);
+	console.log("getKingSort reverseRes", reverseRes);
+	return reverseRes;
 }
 </script>
 <style lang="scss" scoped>

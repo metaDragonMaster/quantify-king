@@ -24,7 +24,7 @@
               <Link to="/explore">{{ $t("导航.量化台") }}</Link>
               <!-- <Link to="/bindFriends">{{ $t("导航.绑定好友") }}</Link> -->
               <Link to="/team/myTeam">{{ $t("导航.我的团队") }}</Link>
-              <Link to="/team/teamLogs">{{ $t("导航.团队收益记录") }}</Link>
+              <!-- <Link to="/team/teamLogs">{{ $t("导航.团队收益记录") }}</Link> -->
             </div>
           </transition>
         </div>
@@ -43,7 +43,7 @@
           <Link to="/explore">{{ $t("导航.量化台") }}</Link>
           <!-- <Link to="/bindFriends">{{ $t("导航.绑定好友") }}</Link> -->
           <Link to="/team/myTeam">{{ $t("导航.我的团队") }}</Link>
-          <Link to="/team/teamLogs">{{ $t("导航.团队收益记录") }}</Link>
+          <!-- <Link to="/team/teamLogs">{{ $t("导航.团队收益记录") }}</Link> -->
         </div>
       </div>
     </el-drawer>

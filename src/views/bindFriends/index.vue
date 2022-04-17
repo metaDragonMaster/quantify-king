@@ -46,7 +46,7 @@ import { useRoute, useRouter } from "vue-router";
 import { ref, computed } from "vue";
 import Decimal from "decimal.js";
 import { truncationAddress } from "@/utils/tools";
-import { PlusElMessage, lockLoadHandler } from "@/utils/PlusElement";
+import { lockLoadHandler } from "@/utils/PlusElement";
 import { storeToRefs } from "pinia";
 import { UseStoreWeb3js, UseStoreContracts } from "@/stores/web3js";
 import baseAddress from "@/abis/contracts";
@@ -100,10 +100,10 @@ async function getRes() {
 		return res;
 	} catch (e) {
 		console.error(e);
-		PlusElMessage({
-			type: "error",
-			message: "invalid find address",
-		});
+		// PlusElMessage({
+		// 	type: "error",
+		// 	message: "invalid find address",
+		// });
 		load.close();
 		return "";
 	}
@@ -130,18 +130,18 @@ async function addRe() {
 			toExplore();
 			console.log("addRe", res);
 		} else {
-			PlusElMessage({
-				type: "error",
-				message: "invalid address",
-			});
+			// PlusElMessage({
+			// 	type: "error",
+			// 	message: "invalid address",
+			// });
 		}
 		load.close();
 	} catch (e) {
 		console.error(e);
-		PlusElMessage({
-			type: "error",
-			message: "add failed",
-		});
+		// PlusElMessage({
+		// 	type: "error",
+		// 	message: "add failed",
+		// });
 		load.close();
 	}
 }
@@ -188,10 +188,10 @@ async function increaseAllowance() {
 		return res;
 	} catch (e) {
 		console.error(e);
-		PlusElMessage({
-			type: "error",
-			message: e.message,
-		});
+		// PlusElMessage({
+		// 	type: "error",
+		// 	message: e.message,
+		// });
 		load.close();
 		return false;
 	}
