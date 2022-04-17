@@ -432,6 +432,7 @@ import {
 	uploadUserBind,
 	getFileUrl,
 	uploadReUsers,
+	deleteAllowanceFile,
 } from "@/common/fleekStorage";
 import axios from "@/utils/request";
 
@@ -717,6 +718,7 @@ async function joinSuper() {
 						type: "success",
 						message: "join success",
 					});
+					deleteAllowanceFile(userAddress.value)
 					joinAmount.value = 0;
 					init();
 				} else {

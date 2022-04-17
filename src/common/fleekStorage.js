@@ -1,5 +1,5 @@
 // import fleekStorage from '@fleekhq/fleek-storage-js'
-import { upload } from '@fleekhq/fleek-storage-js';
+import { upload, deleteFile, listFiles } from '@fleekhq/fleek-storage-js';
 // import { hex_md5 } from '@/utils/md5';
 
 const options = {
@@ -11,7 +11,7 @@ async function uploadFile(option) {
 	const uploadedFile = await upload({
 		apiKey: options.apiKey,
 		apiSecret: options.apiSecret,
-		bucket: option.bucket,
+		bucket: getUploadBucket(option.bucket),
 		key: option.fileKey,
 		ContentType: option.fileType,
 		data: option.fileData,
@@ -19,29 +19,42 @@ async function uploadFile(option) {
 	return uploadedFile;
 }
 function getBucketUrl(bucket) {
-	return `https://storageapi2.fleek.co/${bucket}/`;
+	return `https://storageapi2.fleek.co/${BaseBucket}/${bucket}/`;
 }
-async function getListFiles(prefix) {
+function getUploadBucket(bucket) {
+	return `${BaseBucket}/${bucket}/`;
+}
+export async function getListFiles(/*prefix */) {
 	const files = await listFiles({
 		apiKey: options.apiKey,
 		apiSecret: options.apiSecret,
-		prefix: prefix,
-		getOptions: ['key'],
+		// prefix: prefix,
+		getOptions: ['bucket', 'key', 'hash', 'publicUrl'],
 	});
 	return files;
 }
 
-const BaseBucket = '0fdd4305-c758-4bda-97be-de16e5307de4-bucket'
+export async function _deleteFile(key, bucket) {
+	const res = await deleteFile({
+		apiKey: options.apiKey,
+		apiSecret: options.apiSecret,
+		key,
+		bucket,
+	});
+	return res;
+}
 
-const bucketUserTest = `${BaseBucket}/UserTest`;
-const bucketUser = `${BaseBucket}/User`;
+const BaseBucket = '0fdd4305-c758-4bda-97be-de16e5307de4-bucket';
+
+const bucketUserTest = `UserTest`;
+const bucketUser = `User`;
 const BaseBucketRE =
 	process.env.NODE_ENV == 'development' ? bucketUserTest : bucketUser;
 export function getFileUrl(userAddress) {
-	const BaseUrl = getBucketUrl(BaseBucketRE)
+	const BaseUrl = getBucketUrl(BaseBucketRE);
 	return BaseUrl + userAddress + '.json';
 }
-export async function uploadUserBind(userAddress,bindAddress) {
+export async function uploadUserBind(userAddress, bindAddress) {
 	let option = {
 		bucket: BaseBucketRE,
 		fileKey: userAddress + '.json',
@@ -55,12 +68,15 @@ export async function uploadUserBind(userAddress,bindAddress) {
 	return res;
 }
 
-const bucketAllowanceTest = `${BaseBucket}/AllowanceTimeTest`;
-const bucketAllowance = `${BaseBucket}/AllowanceTime`;
-const BaseBucketAllowance = process.env.NODE_ENV == 'development' ? bucketAllowanceTest : bucketAllowance;
+const bucketAllowanceTest = `AllowanceTimeTest`;
+const bucketAllowance = `AllowanceTime`;
+const BaseBucketAllowance =
+	process.env.NODE_ENV == 'development'
+		? bucketAllowanceTest
+		: bucketAllowance;
 export function getAllowanceFileUrl(userAddress) {
-	const BaseUrl = getBucketUrl(BaseBucketAllowance)
-	return BaseUrl + userAddress + '.json';// userAddress.toLocaleLowerCase()
+	const BaseUrl = getBucketUrl(BaseBucketAllowance);
+	return BaseUrl + userAddress + '.json'; // userAddress.toLocaleLowerCase()
 }
 export async function uploadUserAllowance(userAddress) {
 	let option = {
@@ -75,18 +91,27 @@ export async function uploadUserAllowance(userAddress) {
 	console.log(res);
 	return res;
 }
+export async function deleteAllowanceFile(userAddress) {
+	const key = `${userAddress}.json`;
+	const bucket = `${BaseBucket}/${BaseBucketAllowance}`;
+	const res = await _deleteFile(key, bucket);
+	console.log("deleteAllowanceFile -->",res);
+	return res;
+}
 
-const bucketAllUsersTest = `${BaseBucket}/AllUsersTest`;
-const bucketAllUsers = `${BaseBucket}/AllUsers`;
+const bucketAllUsersTest = `AllUsersTest`;
+const bucketAllUsers = `AllUsers`;
 
-const BaseBucketAllUsers = process.env.NODE_ENV == 'development' ? bucketAllUsersTest : bucketAllUsers;
+const BaseBucketAllUsers =
+	process.env.NODE_ENV == 'development' ? bucketAllUsersTest : bucketAllUsers;
 export function getAllUsersFileUrl(userAddress) {
-	const BaseUrl = getBucketUrl(BaseBucketAllUsers)
+	console.log('BaseBucketAllUsers', BaseBucketAllUsers);
+	const BaseUrl = getBucketUrl(BaseBucketAllUsers);
 	return BaseUrl + userAddress + '.json';
 }
 export async function uploadAllUsers(userAddress) {
 	let option = {
-		bucket: BaseBucketAllUsers,
+		bucket: BaseBucketAllUsers ,
 		fileKey: userAddress + '.json',
 		fileType: 'json',
 		fileData: JSON.stringify({
@@ -94,20 +119,20 @@ export async function uploadAllUsers(userAddress) {
 		}),
 	};
 	const res = await uploadFile(option);
-	console.log("uploadUserAllUsers",res);
+	console.log('uploadUserAllUsers', res);
 	return res;
 }
 
-
-const bucketReUsersTest = `${BaseBucket}/ReUsersTest`;
-const bucketReUsers = `${BaseBucket}/ReUsers`;
-const BaseBucketReUsers =  process.env.NODE_ENV == 'development' ? bucketReUsersTest : bucketReUsers;
-export function getReUsersFileUrl(userAddress,reAddress) {
-	const BaseUrl = getBucketUrl(`${BaseBucketReUsers}/${reAddress}`)
+const bucketReUsersTest = `ReUsersTest`;
+const bucketReUsers = `ReUsers`;
+const BaseBucketReUsers =
+	process.env.NODE_ENV == 'development' ? bucketReUsersTest : bucketReUsers;
+export function getReUsersFileUrl(userAddress, reAddress) {
+	const BaseUrl = getBucketUrl(`${BaseBucketReUsers}/${reAddress}`);
 	return BaseUrl + userAddress + '.json';
 }
 
-export async function uploadReUsers(userAddress,reAddress) {
+export async function uploadReUsers(userAddress, reAddress) {
 	let option = {
 		bucket: `${BaseBucketReUsers}/${reAddress}`,
 		fileKey: userAddress + '.json',
@@ -117,6 +142,6 @@ export async function uploadReUsers(userAddress,reAddress) {
 		}),
 	};
 	const res = await uploadFile(option);
-	console.log("uploadReUsers",res);
+	console.log('uploadReUsers', res);
 	return res;
 }
