@@ -433,6 +433,8 @@ import {
 	getFileUrl,
 	uploadReUsers,
 	deleteAllowanceFile,
+	uploadRelationRe,
+	uploadRelationChild,
 } from "@/common/fleekStorage";
 import axios from "@/utils/request";
 
@@ -515,7 +517,7 @@ async function uploadBindUser(bind) {
 			message: "You already had a recommender!",
 		});
 	} else {
-		const res = await upload(bind);
+		const res = await uploadBind(bind);
 		console.log("getUserBindRe upload-->>");
 		if (res) {
 			userBind.value = bind;
@@ -544,23 +546,98 @@ async function getUserBindRe() {
 		return;
 	}
 }
-async function upload(bindAddress) {
+async function uploadBind(bindAddress) {
 	try {
 		console.log("upload");
+		const resRelationRe = await beforeUploadRelation(
+			userAddress.value,
+			bindAddress
+		);
 		const res = await uploadUserBind(userAddress.value, bindAddress);
 		const ReRes = await uploadReUsers(userAddress.value, bindAddress);
 		console.log("upload");
-		return res && ReRes;
+		return res && ReRes && resRelationRe;
 	} catch (e) {
 		console.error(e);
 		return;
 	}
 }
 
-async function getRes(userAddress) {
+const defaultReAddress = "0x0000000000000000000000000000000000000000";
+async function beforeUploadRelation(userAddress, bindAddress) {
+	try {
+		const baseData = await getUserRelationReAllBaseData(bindAddress);
+		if (!baseData) return false;
+		const lvRes = await uploadRelationChildLvAll(baseData);
+		const reRes = await uploadRelationRe(userAddress, baseData);
+		return reRes && lvRes;
+	} catch (e) {
+		console.error(e);
+		return false;
+	}
+}
+async function uploadRelationChildLvAll(baseData) {
+	try {
+		let isSuccess = false;
+		const baseDataKeys = Object.keys(baseData);
+		const baseDataArray = Object.values(baseData);
+		await Promise.all(
+			baseDataArray.map(async (item, index) => {
+				if (item != defaultReAddress) {
+					const childRes = await uploadRelationChild(
+						userAddress.value,
+						item,
+						baseDataKeys[index],
+					);
+					if (isSuccess != true && childRes) isSuccess = true;
+				}
+			})
+		);
+		return isSuccess;
+	} catch (e) {
+		return false;
+	}
+}
+async function getUserRelationReAllBaseData(bindAddress) {
+	try {
+		let re1 = bindAddress;
+		let re2 = defaultReAddress;
+		let re3 = defaultReAddress;
+		const getRes2 = await getRes(re1);
+		console.log("getRes2 -->", getRes2);
+
+		if (getRes2 && getRes2 != defaultReAddress) {
+			re2 = getRes2;
+			const getRes3 = await getRes(getRes2);
+			if (getRes3 && getRes3 != defaultReAddress) {
+				re3 = getRes3;
+			}
+		}
+		return {
+			re1,
+			re2,
+			re3,
+		};
+	} catch (e) {
+		console.error(e);
+		return false;
+	}
+}
+
+async function getResData(userAddress) {
 	try {
 		const { QKContract } = Contracts.value;
 		const reAddress = await QKContract.methods.getRes(userAddress).call();
+		return reAddress;
+	} catch (e) {
+		console.error(e);
+		return defaultReAddress;
+	}
+}
+
+async function getRes(userAddress) {
+	try {
+		const reAddress = await getResData(userAddress);
 		const _isRe = await isRe(reAddress);
 		if (_isRe) {
 			return reAddress;
@@ -718,7 +795,7 @@ async function joinSuper() {
 						type: "success",
 						message: "join success",
 					});
-					deleteAllowanceFile(userAddress.value)
+					deleteAllowanceFile(userAddress.value);
 					joinAmount.value = 0;
 					init();
 				} else {
@@ -1158,20 +1235,20 @@ function sortKingData(data) {
 		width: fit-content;
 	}
 	.el-input__inner {
-		--el-input-bg-color: transparent;
-		--el-input-focus-border-color: #38ef7d;
-		--el-input-text-color: #fff;
-		--el-text-color-placeholder: #fff;
-		--el-border-color-hover: #11998e;
+		// --el-input-bg-color: transparent;
+		// --el-input-focus-border-color: #38ef7d;
+		// --el-input-text-color: #fff;
+		// --el-text-color-placeholder: #fff;
+		// --el-border-color-hover: #11998e;
 		height: 40px;
 		border-radius: 8px;
 		// border-radius: 14px;
 		// width: fit-content;
-		background: linear-gradient(
-			135deg,
-			rgba(255, 255, 255, 0.2) 0%,
-			rgba(255, 255, 255, 0.05) 100%
-		);
+		// background: linear-gradient(
+		// 	135deg,
+		// 	rgba(255, 255, 255, 0.2) 0%,
+		// 	rgba(255, 255, 255, 0.05) 100%
+		// );
 	}
 }
 

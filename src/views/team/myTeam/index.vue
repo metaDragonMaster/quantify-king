@@ -40,6 +40,8 @@
       <p class="title font-o my">
         我的收益 ：
         <span class="color-green">{{ myInterests }} USDT</span>
+        <!-- <br> <span class="color-green">{{ reInterests._income }} 可领取</span><br>
+        <span class="color-green">{{ reInterests._released }} 已领取</span> -->
       </p>
       <!-- <div class="table-title font-o">
             </div>-->

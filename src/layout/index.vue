@@ -9,7 +9,7 @@
 <script setup>
 import { watch } from "vue";
 import HeadNav from "./modules/headNav";
-import { PlusElMessage, lockLoadHandler } from "@/utils/PlusElement";
+import {  lockLoadHandler } from "@/utils/PlusElement";
 import {
 	useWindowResize,
 	// useWindowScroll
