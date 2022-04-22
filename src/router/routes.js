@@ -14,14 +14,14 @@ const routes = [
         },
         component: () => import("@/views/homepage/index.vue"),
       },
-      {
-        path: "/demo",
-        name: "demo",
-        meta: {
-          title: "测试",
-        },
-        component: () => import("@/views/demo/index.vue"),
-      },
+      // {
+      //   path: "/demo",
+      //   name: "demo",
+      //   meta: {
+      //     title: "测试",
+      //   },
+      //   component: () => import("@/views/demo/index.vue"),
+      // },
       {
         path: "/explore",
         name: "explore",

@@ -27,12 +27,12 @@ function getBucketUrl(bucket) {
 function getUploadBucket(bucket) {
 	return `${BaseBucket}/${bucket}/`;
 }
-export async function getListFiles(/*prefix */) {
+export async function getListFiles(prefix) {
 	const files = await listFiles({
 		apiKey: options.apiKey,
 		apiSecret: options.apiSecret,
-		// prefix: prefix,
-		getOptions: ['bucket', 'key', 'hash', 'publicUrl'],
+		prefix: `${BaseVersion}/${prefix}`,
+		getOptions: [ 'key', 'publicUrl'],
 	});
 	return files;
 }
@@ -46,7 +46,7 @@ export async function _deleteFile(key, bucket) {
 	});
 	return res;
 }
-const BaseVersion = 'version-5';
+const BaseVersion = 'version-11';
 const BaseBucket = `0fdd4305-c758-4bda-97be-de16e5307de4-bucket/${BaseVersion}`;
 
 
@@ -54,9 +54,7 @@ const BaseBucket = `0fdd4305-c758-4bda-97be-de16e5307de4-bucket/${BaseVersion}`;
 const bucketAllowanceTest = `AllowanceTimeTest`;
 const bucketAllowance = `AllowanceTime`;
 const BaseBucketAllowance =
-	process.env.NODE_ENV == 'development'
-		? bucketAllowanceTest
-		: bucketAllowance;
+	process.env.NODE_ENV == 'development' ? bucketAllowanceTest : bucketAllowance;
 export function getAllowanceFileUrl(userAddress) {
 	const BaseUrl = getBucketUrl(BaseBucketAllowance);
 	return BaseUrl + userAddress + '.json'; // userAddress.toLocaleLowerCase()
@@ -181,6 +179,26 @@ const bucketRelationChild = "RelationChild"
 const BaseBucketRelationChild =
 	process.env.NODE_ENV == 'development' ? bucketRelationChildTest : bucketRelationChild;
 const lvs = ['re1','re2','re3'];
+export function getRelationChildFileUrl(userAddress,reAddress,lv) {
+	const bucket = `${BaseBucketRelationChild}/${reAddress}/${lv}`;
+	const url = getBucketUrl(bucket)
+	return `${url}${userAddress}.json`
+}
+
+function getFileNameByFileKey(packageName, key) {
+	return key.slice(
+		`${BaseVersion}/${packageName}/`.length,
+		key.length - '.json'.length
+	)
+}
+export async function getRelationChildLvListFileUrl(reAddress,lv) {
+	const bucket = `${BaseBucketRelationChild}/${reAddress}/${lv}`;
+	const files = await getListFiles(bucket)
+	const addressList = files.map(item=>getFileNameByFileKey(bucket,item.key))
+	return addressList
+}
+
+
 export async function uploadRelationChild(userAddress,reAddress,lv) {
 	if(!lvs.includes(lv)) return false;
 	let option = {
