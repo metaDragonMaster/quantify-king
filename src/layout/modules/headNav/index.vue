@@ -9,17 +9,10 @@
         <!-- <UserAssets></UserAssets> -->
         <!-- <Withdraw></Withdraw> -->
         <NetWork></NetWork>
-        <div
-          class="nav-posi"
-          @mouseenter="navActive = true"
-          @mouseleave="navActive = false"
-        >
+        <div class="nav-posi" @mouseenter="navActive = true" @mouseleave="navActive = false">
           <LinkWallet></LinkWallet>
           <transition name="el-fade-in" mode="out-in">
-            <div
-              class="pc-nav nav-list theme-shadow-border-black"
-              v-show="navActive"
-            >
+            <div class="pc-nav nav-list theme-shadow-border-black" v-show="navActive">
               <Link to="/homepage">{{ $t("导航.首页") }}</Link>
               <Link to="/explore">{{ $t("导航.量化台") }}</Link>
               <!-- <Link to="/bindFriends">{{ $t("导航.绑定好友") }}</Link> -->

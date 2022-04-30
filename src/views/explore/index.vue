@@ -4,7 +4,7 @@
 			{{ moment(userInfo.end_time * 1000).format("yyyy-MM-DD HH:mm:ss") }}
 		</div>
 		<div>{{ timeTamp }}</div>
-		<div>{{ moment(NowTime * 1000).format("yyyy-MM-DD HH:mm:ss") }}</div> -->
+		<div>{{ moment(NowTime * 1000).format("yyyy-MM-DD HH:mm:ss") }}</div>-->
 		<!-- <div>userBind: {{ userBind }}</div> -->
 		<section class="model-1 model-grid">
 			<ul class="wallet">
@@ -26,18 +26,17 @@
 								<u>{{ $t("勘察.去提现") }}</u>
 							</p>-->
 							<p class="cash-out" @click="openCashOut">
-								<img
-									src="@/assets/icons/icon-cash-out.png"
-									alt
-								/>
+								<img src="@/assets/icons/icon-cash-out.png" alt />
 								<u>{{ $t("勘察.去提现") }}</u>
 							</p>
 							<Mask v-model:show="cashOut.maskShow">
 								<div class="cash-out-dialog">
 									<p class="title font-o">
-										<span class="ps">{{
-											$t("勘察.量化本金")
-										}}</span>
+										<span class="ps">
+											{{
+												$t("勘察.量化本金")
+											}}
+										</span>
 										<span>{{ weiUserinterest }}</span>
 									</p>
 									<el-input-number
@@ -48,18 +47,8 @@
 										:controls="false"
 									/>
 									<div class="footer">
-										<button
-											class="submit"
-											@click="cashOutSubmit"
-										>
-											提现
-										</button>
-										<button
-											class="cancel"
-											@click="cashOutCancel"
-										>
-											取消
-										</button>
+										<button class="submit" @click="cashOutSubmit">提现</button>
+										<button class="cancel" @click="cashOutCancel">取消</button>
 									</div>
 								</div>
 							</Mask>
@@ -69,13 +58,19 @@
 								<img src="@/assets/icons/b-t.png" alt />
 								<span class="font-o">USDT</span>
 							</div>
-							<span class="font-o color-green">{{
-								weiUserinterest
-							}}</span>
+							<span class="font-o color-green">
+								{{
+									weiUserinterest
+								}}
+							</span>
 						</div>
 						<div class="cell font-o">
 							<span class="color-grey">USDT</span>
-							<span>≈ ￥{{ weiUserinterest * 6.3 }}</span>
+							<span>
+								≈
+								<!-- ￥ -->
+								{{ weiUserinterest * 6.3 }}
+							</span>
 						</div>
 					</div>
 					<div class="deposit theme-box-shadow">
@@ -86,9 +81,7 @@
 							:min="0"
 							:controls="false"
 						/>
-						<button class="submit" @click="joinSuper">
-							{{ $t("勘察.存入") }}
-						</button>
+						<button class="submit" @click="joinSuper">{{ $t("勘察.存入") }}</button>
 					</div>
 				</li>
 				<li
@@ -102,14 +95,12 @@
 					<div class="cell">
 						<h3>{{ $t("勘察.利息余额") }}</h3>
 						<p>
-							<img
-								class="icon"
-								src="@/assets/icons/b-t.png"
-								alt
-							/>
-							<span class="color-green font-o">{{
-								earning.interest
-							}}</span>
+							<img class="icon" src="@/assets/icons/b-t.png" alt />
+							<span class="color-green font-o">
+								{{
+									earning.interest
+								}}
+							</span>
 						</p>
 					</div>
 					<!-- <div>{{ $t("勘察.每*秒产出一次利息", { n: "30" }) }}</div> -->
@@ -124,9 +115,7 @@
 				>
 					<h3 class="cell">
 						<span>{{ $t("勘察.利率") }}</span>
-						<span class="color-green font-o"
-							>{{ earning.interestRate }} %</span
-						>
+						<span class="color-green font-o">{{ earning.interestRate }} %</span>
 					</h3>
 					<div class="cell">
 						<p>
@@ -137,9 +126,7 @@
 							}}
 						</p>
 						<!-- <span class="color-grey font-o">~ ￥0.96 （ 0.5% ）</span> -->
-						<span class="color-grey font-o"
-							>{{ earnEveryTime }} USDT</span
-						>
+						<span class="color-grey font-o">{{ earnEveryTime }} USDT</span>
 					</div>
 				</li>
 				<li
@@ -152,9 +139,7 @@
 				>
 					<h3 class="cell">
 						<span>{{ $t("勘察.累积提取利息") }}</span>
-						<span class="color-green font-o"
-							>{{ textFromWei(userInfo.quantity) }} USDT</span
-						>
+						<span class="color-green font-o">{{ textFromWei(userInfo.quantity) }} USDT</span>
 					</h3>
 					<!-- <div class="cell">
 						<span>
@@ -176,17 +161,16 @@
 					:disabled="Down > 0"
 					class="theme-button-clip font-o button"
 					@click="withdraw"
-				>
-					{{ $t("勘察.提息") }} --->
-				</button>
-				<p color="count-down">CountDown:{{ TimeCountDown }}</p>
+				>{{ $t("勘察.提息") }} ---></button>
+				<p color="count-down">
+					<!-- CountDown: -->
+					{{ TimeCountDown }}
+				</p>
 			</div>
 		</section>
 		<section class="model-2">
 			<p class="model-title">
-				<span class="theme-text-shadow-green">
-					{{ $t("勘察.利息") }}
-				</span>
+				<span class="theme-text-shadow-green">{{ $t("勘察.利息") }}</span>
 				{{ $t("勘察.计算规则") }}
 			</p>
 			<div class="model-grid">
@@ -205,17 +189,12 @@
 						<!-- </p> -->
 						<p class="cell font-o">
 							<!-- <span>≥ 30 USDT</span> -->
-							<el-input
-								v-model.number="userCalcData.modelValue"
-								@change="userCalc"
-							>
+							<el-input v-model.number="userCalcData.modelValue" @change="userCalc">
 								<template #append>USDT</template>
 							</el-input>
-							<span class="color-green"
-								>{{ userCalcData.interestRate }} %</span
-							>
+							<span class="color-green">{{ userCalcData.interestRate }} %</span>
 						</p>
-						<div class="bg-green color-green font-o">
+						<div class="bg-green color-green font-o" >
 							<p>
 								{{
 									$t("勘察.每*可以领取", {
@@ -224,9 +203,7 @@
 								}}
 							</p>
 							<p>
-								<span class="usdt-num">
-									{{ userCalcEveryTime }}
-								</span>
+								<span class="usdt-num">{{ userCalcEveryTime }}</span>
 								USDT
 							</p>
 						</div>
@@ -245,11 +222,7 @@
 							<span>{{ $t("勘察.利息") }}</span>
 						</p>
 						<ul>
-							<li
-								class="cell"
-								v-for="item in InterestReveal.ICArray"
-								:key="item.id"
-							>
+							<li class="cell" v-for="item in InterestReveal.ICArray" :key="item.id">
 								<span>≥ {{ item.conditional }} USDT</span>
 								<span>
 									{{ item.interest }} % USDT
@@ -266,9 +239,7 @@
 		</section>
 		<section class="model-3">
 			<p class="model-title">
-				<span class="theme-text-shadow-green"
-					>{{ $t("勘察.好友") }} {{ $t("勘察.邀请") }}</span
-				>
+				<span class="theme-text-shadow-green">{{ $t("勘察.好友") }} {{ $t("勘察.邀请") }}</span>
 				{{ $t("勘察.规则") }}
 			</p>
 			<div class="model-grid">
@@ -283,21 +254,15 @@
 					>
 						<p class="cell">
 							<span>{{ $t("勘察.一级好友的分红比例") }}</span>
-							<span class="font-o"
-								>{{ ReFees.List[0] / 10 }}%</span
-							>
+							<span class="font-o">{{ ReFees.List[0] / 10 }}%</span>
 						</p>
 						<p class="cell">
 							<span>{{ $t("勘察.二级好友的分红比例") }}</span>
-							<span class="font-o"
-								>{{ ReFees.List[1] / 10 }}%</span
-							>
+							<span class="font-o">{{ ReFees.List[1] / 10 }}%</span>
 						</p>
 						<p class="cell">
 							<span>{{ $t("勘察.三级好友的分红比例") }}</span>
-							<span class="font-o"
-								>{{ ReFees.List[2] / 10 }}%</span
-							>
+							<span class="font-o">{{ ReFees.List[2] / 10 }}%</span>
 						</p>
 					</div>
 					<!-- <div class="theme-box-shadow qrcode flex-column">
@@ -308,12 +273,7 @@
 						<li class="theme-box-shadow">
 							<p>{{ $t("勘察.邀请链接") }}</p>
 							<p>{{ slocationLink }}</p>
-							<button
-								class="bg-green"
-								@click="copy(locationLink)"
-							>
-								{{ $t("勘察.复制") }}
-							</button>
+							<button class="bg-green" @click="copy(locationLink)">{{ $t("勘察.复制") }}</button>
 						</li>
 						<!--
 							<li class="theme-box-shadow">
@@ -333,9 +293,7 @@
 		</section>
 		<section class="model-4">
 			<p class="model-title">
-				<span class="theme-text-shadow-green">
-					{{ $t("勘察.利息收益") }}
-				</span>
+				<span class="theme-text-shadow-green">{{ $t("勘察.利息收益") }}</span>
 				{{ $t("勘察.排行榜") }}
 			</p>
 			<div class="model-grid">
@@ -349,16 +307,10 @@
 				>
 					<p class="cell title">
 						<span class="font-o">Address</span>
-						<span>
-							{{ $t("勘察.累积收益") }}{{ $t("勘察.利息") }}
-						</span>
+						<span>{{ $t("勘察.累积收益") }}{{ $t("勘察.利息") }}</span>
 					</p>
 					<ul class="font-o address-list">
-						<li
-							class="cell"
-							v-for="item in KingSortData.List"
-							:key="item.id"
-						>
+						<li class="cell" v-for="item in KingSortData.List" :key="item.id">
 							<p>
 								<img src="@/assets/icons/icon-bsc.png" alt />
 								<span>{{ item._us }}</span>
@@ -383,11 +335,7 @@
 					</p>-->
 					<changeLanguageVue></changeLanguageVue>
 					<p>
-						<img
-							class="icon"
-							src="@/assets/icons/icon-reserved.png"
-							alt
-						/>
+						<img class="icon" src="@/assets/icons/icon-reserved.png" alt />
 						<span>Quantify king</span>
 					</p>
 				</div>
@@ -668,10 +616,10 @@ const Down = computed(() => {
 });
 const TimeCountDown = computed(() => {
 	if (earning.interest <= 0 && Down.value <= 0) {
-		return "暂无利息";
+		return ""; // 暂无利息
 	}
 	if (Down.value <= 0) {
-		return "领取";
+		return t("勘察.领取");
 	} else {
 		const format = formatTimeDown(Down.value);
 		const _day = myFormat(format.day);
@@ -699,17 +647,18 @@ const timeTamp = ref("0");
 // }
 const timeTampMinutes = computed(() => {
 	const second = timeTamp.value;
+	if (second == '0') return `12${t("时间.小时")}`;
 	const minute = second / 60;
 	const hour = minute / 60;
 	const day = hour / 24;
 	// `${_day}d:${_hour}h:${_minute}m:${_second}s`
 	let describe = "";
 	if (day >= 1) {
-		describe = `${day} ${t("时间.天")}`;
+		describe = `${day}${t("时间.天")}`;
 	} else if (hour >= 1) {
-		describe = `${hour} ${t("时间.小时")}`;
+		describe = `${hour}${t("时间.小时")}`;
 	} else if (minute >= 1) {
-		describe = `${minute} ${t("时间.分钟")}`;
+		describe = `${minute}${t("时间.分钟")}`;
 	} else {
 		describe = `${second} ${t("时间.秒")}`;
 	}
@@ -922,7 +871,8 @@ const earnEveryTime = computed(
 			(earning.interestRate *
 				10 *
 				textFromWei(userInfo.interest_bearing_principal)) /
-				1000 || "Interest bearing..."
+			1000 || '0'
+			// "Interest bearing..."
 		);
 	}
 );
@@ -956,7 +906,8 @@ const userCalcData = reactive({
 });
 
 const userCalcEveryTime = computed(
-	() => userCalcData.interest / userCalcData.second || "Interest bearing..."
+	() => userCalcData.interest / userCalcData.second || '0'
+	// "Interest bearing..."
 );
 const userCalc = debounce(async () => {
 	// userCalcData.Load = true;
@@ -1374,12 +1325,22 @@ function sortKingData(data) {
 	}
 	.s-1 {
 		padding: 20px 45px;
+		@media screen and (max-width: 768px) {
+			.color-green {
+				text-align: right;
+			}
+		}
 		.cell:first-of-type {
 			font-size: 24px;
 			margin-bottom: 14px;
 		}
 		.cell .el-input {
-			max-width: 200px;
+			@media screen and (min-width: 769px) {
+				max-width: 200px;
+			}
+			@media screen and (max-width: 768px) {
+				max-width: 100%;
+			}
 		}
 		.bg-green {
 			display: block;

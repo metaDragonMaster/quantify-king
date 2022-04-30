@@ -74,8 +74,8 @@ watch(
 
 async function isRe(address) {
 	try {
-		const { Contracts } = UseStoreContracts();
-		const res = await Contracts.QKContract.methods.isRe(address).call();
+		const { QKContract } = Contracts.value;
+		const res = await QKContract.methods.isRe(address).call();
 		// console.log(res);
 		return res;
 	} catch (e) {

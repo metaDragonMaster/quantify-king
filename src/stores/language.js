@@ -2,7 +2,7 @@ import { defineStore } from "pinia"
 // import { useI18n } from "vue-i18n"
 
 function languageValidity(language) {
-    return ['zh','en'].includes(language)
+    return ['zh','en','ja','kr'].includes(language)
 }
 export const UseStoreLanguage = defineStore('Language', {
     state: () => ({

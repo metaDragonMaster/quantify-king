@@ -17,9 +17,7 @@
               ? 'theme-shadow-border'
               : 'theme-shadow-border-black',
           ]"
-        >
-          {{ item.title }}
-        </button>
+        >{{ item.title }}</button>
       </li>
     </ul>
     <div class="table-content">
@@ -36,20 +34,18 @@
           {{ userAllReBalance.profit }}
           USDT
         </span>
-      </p> -->
+      </p>-->
       <p class="title font-o my">
-        我的收益 ：
+        {{ t('勘察.我的收益') }} :
         <span class="color-green">{{ myInterests }} USDT</span>
         <!-- <br> <span class="color-green">{{ reInterests._income }} 可领取</span><br>
-        <span class="color-green">{{ reInterests._released }} 已领取</span> -->
+        <span class="color-green">{{ reInterests._released }} 已领取</span>-->
       </p>
       <!-- <div class="table-title font-o">
-            </div>-->
+      </div>-->
       <div class="title receive">
         <div class="theme-bg-shadow receive-button">
-          <button class="theme-bg-shadow-green do" @click="reWithdraw">
-            可领取
-          </button>
+          <button class="theme-bg-shadow-green do" @click="reWithdraw">{{ t('勘察.可领取') }} :</button>
           <div class="theme-bg-shadow-black can">
             <span class="color-green">{{ weiIncome }} USDT</span>
           </div>
@@ -74,6 +70,7 @@ import {
   LoadSvg,
   svgViewBox,
 } from "@/utils/PlusElement";
+import { useLanguage } from "@/hooks/useLanguage"
 import { ArrayKeysToObject, truncationAddress } from "@/utils/tools";
 import { reInterestsInterface } from "@/abis/interface";
 import { UseStoreContracts, UseStoreWeb3js } from "@/stores/web3js";
@@ -95,12 +92,14 @@ const { isPc } = storeToRefs(storeResize);
 function truncation(address) {
   return isPc.value ? address : truncationAddress(address, 8, 8);
 }
+const { t } = useLanguage()
+
 // function
-const teamLV = [
-  { id: 0, title: "一级团队", func: "getResChildS1" },
-  { id: 1, title: "二级团队", func: "getResChildS2" },
-  { id: 2, title: "三级团队", func: "getResChildS3" },
-];
+const teamLV = computed(()=> [
+  { id: 0, title: t("团队.一级团队"), func: "getResChildS1" },
+  { id: 1, title: t("团队.二级团队"), func: "getResChildS2" },
+  { id: 2, title: t("团队.三级团队"), func: "getResChildS3" },
+]);
 const actionLv = ref("1");
 function selectLV(item) {
   actionLv.value = item.id;
@@ -111,7 +110,7 @@ function selectLV(item) {
 async function init() {
   // const load = lockLoadHandler('loading');
   try {
-    await selectLV(teamLV[0]);
+    await selectLV(teamLV.value[0]);
     await getReInterests();
     // load.close()
   } catch (e) {
@@ -122,7 +121,7 @@ async function init() {
 onMounted(() => init());
 
 const tableHead = computed(() => {
-  return [`团队地址(${tableData.value.length})`];
+  return [`${t('团队.团队地址')}(${tableData.value.length})`];
 });
 const tableLoad = ref(false);
 const tableData = ref([]);

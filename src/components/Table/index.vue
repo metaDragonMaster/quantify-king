@@ -14,7 +14,7 @@
                     <slot name="cell" :item="item"></slot>
                 </li>
             </ul>
-            <el-empty v-show="isEmpty"></el-empty>
+            <el-empty v-show="isEmpty" description="	"></el-empty>
         </div>
     </div>
 </template>

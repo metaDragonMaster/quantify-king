@@ -11,10 +11,10 @@ export function useLanguage() {
   return {
     t,
     type: LanguageType,
-    change: function () {
+    change: function (language) {
       // console.log(LanguageType);
-      setLanguageType(LanguageType.value == "zh" ? "en" : "zh");
-      locale.value = locale.value == "zh" ? "en" : "zh";
+      setLanguageType(language);
+      locale.value = language;
     },
   };
 }
